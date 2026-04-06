@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(WidgetType::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('country_code', 2); // mx
             $table->string('ocr_lang', 5);
 
             $table->json('validation_rules');

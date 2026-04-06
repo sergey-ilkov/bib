@@ -14,25 +14,20 @@ class LanguagesSeeder extends Seeder
     public function run(): void
     {
         //
-        $languages = [
-            [
-                'name' => 'English',
-                'code' => 'en',
-            ],
-            [
-                'name' => 'Spanish',
-                'code' => 'es',
-            ],
+        $langs = [
+            ['name' => 'English', 'code' => 'en',],
+            ['name' => 'Spanish', 'code' => 'es',],
         ];
 
-        foreach ($languages as $language) {
-            $data = [
-                'name' => $language['name'],
-                'code' => $language['code'],
-            ];
+        foreach ($langs as $lang) {
 
+            // $data = [
+            //     'name' => $lang['name'],
+            //     'code' => $lang['code'],
+            // ];
 
-            Language::create($data);
+            // Language::сreate($data);
+            Language::updateOrCreate(['code' => $lang['code']], $lang);
         }
     }
 }

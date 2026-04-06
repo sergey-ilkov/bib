@@ -16,9 +16,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
 
+            // UsersSeeder::class,
+            // UserSitesSeeder::class,
+
             LanguagesSeeder::class,
-            UsersSeeder::class,
-            UserSitesSeeder::class,
+            WidgetTypeSeeder::class,
+            WidgetTemplateSeeder::class,
         ]);
     }
 }

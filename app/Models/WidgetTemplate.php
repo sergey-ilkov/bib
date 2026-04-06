@@ -38,16 +38,16 @@ class WidgetTemplate extends Model
     }
 
     // Связь с типом виджета
-    public function type(): BelongsTo
+    // public function type(): BelongsTo
+    // {
+    //     return $this->belongsTo(WidgetType::class, 'widget_type_id');
+    // }
+    public function widgetType(): BelongsTo
     {
         return $this->belongsTo(WidgetType::class);
     }
-    // public function widgetType(): BelongsTo
-    // {
-    //     return $this->belongsTo(WidgetType::class);
-    // }
     // Все эталонные переводы этого шаблона
-    public function tranlations(): HasMany
+    public function translations(): HasMany
     {
         return $this->hasMany(WidgetTemplateTranslation::class);
     }
