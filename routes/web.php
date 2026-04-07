@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AppController;
 use App\Http\Controllers\Account\AuthController;
+use App\Http\Controllers\Account\WidgetController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -63,6 +64,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/account', [AccountController::class, 'update'])->name('account.update');
 
     Route::get('/apps', [AppController::class, 'index'])->name('apps');
+
+
+    // Страница создания виджета
+    Route::get('/sites/{id}/widgets/create', [WidgetController::class, 'create'])->name('widgets.create');
+
+    // Сохранение виджета (пока один шаблон, сохраняем в 'create')
+    // Route::post('/sites/{id}/widgets', [WidgetController::class, 'store'])->name('widgets.store');
+
+    // Страница конструктора для редактирования
+    Route::get('/widget/{uuid}', [WidgetController::class, 'edit'])->name('widget.edit');
 });
 
 

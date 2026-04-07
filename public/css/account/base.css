@@ -965,3 +965,23 @@ body.fixed {
 }
 @media (max-width: 500px) {
 }
+
+/* ? widget create page*/
+.widget-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.widget-create {
+    padding-top: 16vh;
+}
+.form-widget-create-wrap {
+    border-radius: 8px;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    padding: 20px 24px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}

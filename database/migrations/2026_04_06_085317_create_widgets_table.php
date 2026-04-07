@@ -15,13 +15,15 @@ return new class extends Migration
     {
         Schema::create('widgets', function (Blueprint $table) {
             $table->id();
+            // $table->id()->startingValue(10);
 
-            // ? Привязка к сайту клиента  nullable() 
+            //  Привязка к сайту клиента  
             $table->foreignIdFor(Site::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             // Какой шаблон (логику) использует этот виджет
             $table->foreignIdFor(WidgetTemplate::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             // Публичный идентификатор для вставки скрипта: <script src=".../?uid=abc-123">
             $table->string('uid')->unique();
+            $table->string('name');
             // Кастомизация стилей (цвета, отступы, радиусы) в JSON
             $table->json('settings')->nullable();
             $table->boolean('is_active')->default(true);

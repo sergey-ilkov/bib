@@ -6,8 +6,7 @@ $user_initial = substr($user->email, 0, 1) ;
 
 
 <header class="header">
-    <div class="container">
-    </div>
+
     <div class="header-inner">
         <div class="logo">Bibber</div>
 

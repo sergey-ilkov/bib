@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->id()->startingValue(10);
+
 
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->string('name');

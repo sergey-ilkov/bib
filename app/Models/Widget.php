@@ -14,6 +14,7 @@ class Widget extends Model
         'site_id',
         'widget_template_id',
         'uid',
+        'name',
         'settings',
         'is_active'
     ];
@@ -22,6 +23,7 @@ class Widget extends Model
         'site_id' => 'integer',
         'widget_template_id' => 'integer',
         'uid' => 'string',
+        'name' => 'string',
         'settings' => 'array',
         'is_active' => 'boolean',
     ];
@@ -34,7 +36,7 @@ class Widget extends Model
     // Шаблон (логика и правила), на котором основан виджет
     public function template(): BelongsTo
     {
-        return $this->belongsTo(WidgetTemplate::class);
+        return $this->belongsTo(WidgetTemplate::class, 'widget_template_id');
     }
     // Кастомные переводы, созданные клиентом для этого виджета
     public function clientTranslations(): HasMany

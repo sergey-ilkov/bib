@@ -23,7 +23,7 @@ class WidgetTemplateTranslation extends Model
     // К какому шаблону относится перевод
     public function template(): BelongsTo
     {
-        return $this->belongsTo(WidgetTemplate::class);
+        return $this->belongsTo(WidgetTemplate::class, 'widget_template_id');
     }
     // На каком языке перевод
     public function language(): BelongsTo
