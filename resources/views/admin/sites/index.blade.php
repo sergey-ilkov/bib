@@ -33,8 +33,9 @@
                     {{-- <div class="table-body__col">User email</div> --}}
                     <div class="table-body__col">Site name</div>
                     <div class="table-body__col">domen</div>
-                    <div class="table-body__col">upload_url</div>
-                    <div class="table-body__col" style="max-width: 120px">device_script</div>
+                    <div class="table-body__col">settings</div>
+                    {{-- <div class="table-body__col">upload_url</div>
+                    <div class="table-body__col" style="max-width: 120px">device_script</div> --}}
                     <div class="table-body__col" style="max-width: 120px">is_blocked</div>
 
 
@@ -59,8 +60,17 @@
                     {{-- <div class="table-body__col">{{ $site->user->email }}</div> --}}
                     <div class="table-body__col">{{ $site->name }}</div>
                     <div class="table-body__col">{{ $site->domen }}</div>
-                    <div class="table-body__col">{{ $site->upload_url }}</div>
-                    <div class="table-body__col" style="max-width: 120px">{{ $site->device_script}}</div>
+
+                    <div class="table-body__col col-json">
+                        @foreach ($site->settings as $key => $value)
+                        @if ($value)
+
+                        <span><strong>{{ $key }}:</strong> {{ $value }}</span>
+                        @endif
+                        @endforeach
+                    </div>
+
+
                     <div class="table-body__col" style="max-width: 120px">{{ $site->is_blocked }}</div>
 
 

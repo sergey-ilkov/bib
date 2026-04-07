@@ -14,12 +14,17 @@
 
 
 
-    <link rel="stylesheet" href="{{ asset('css/app/app.css') . '?v=' . rand(10, 1000)  }}">
+
+    <link rel="stylesheet" href="{{ asset('css/account/base.css') . '?v=' . rand(10, 1000)  }}">
+
+    @stack('css')
 
 
 
 
-    <script src="{{ asset('js/app/app.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+    <script src="{{ asset('js/account/account.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+
+    @stack('js')
 
 </head>
 
@@ -28,7 +33,7 @@
 
     <div class="wrapper page-{{$page}}">
 
-        @include('frontend.includes.header')
+        @include('account.includes.header-account')
 
 
         @yield('content')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class AppController extends Controller
 
         $sites = $user->sites()->whereNot('is_blocked', true)->get();
 
-        return view('frontend.apps.index', [
+        return view('account.apps.index', [
             'title' => 'My Apps',
             'page' => 'app',
             'sites' => $sites,

@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('account.layouts.account')
 
 @section('content')
 
@@ -15,10 +15,16 @@
         <div class="app-head">
             <h1 class="title-h1">My Apps</h1>
 
-            <div class="app-head-widget">
-                <span class="app-head-widget-label">widgets</span>
-                <span class="app-head-widget-value">{{ '0 ' . '/ ' . count($sites) }}</span>
+            <div class="app-info">
 
+                <div class="app-info-col">
+                    <span class="app-info-label">sites</span>
+                    <span class="app-info-value">{{ count($sites) }}</span>
+                </div>
+                <div class="app-info-col">
+                    <span class="app-info-label">widgets</span>
+                    <span class="app-info-value">{{ '0'}}</span>
+                </div>
             </div>
         </div>
 

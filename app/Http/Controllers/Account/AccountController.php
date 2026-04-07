@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class AccountController extends Controller
     {
         // 
 
-        return view('frontend.accounts.index', ['title' => 'Account', 'page' => 'account']);
+        return view('account.index', ['title' => 'Account', 'page' => 'account']);
     }
 
     public function update(Request $request)

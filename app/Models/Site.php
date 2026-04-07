@@ -13,8 +13,7 @@ class Site extends Model
         'user_id',
         'name',
         'domen',
-        'upload_url',
-        'device_script',
+        'settings',
         'is_blocked',
     ];
 
@@ -22,8 +21,7 @@ class Site extends Model
         'user_id' => 'integer',
         'name' => 'string',
         'domen' => 'string',
-        'upload_url' => 'string',
-        'device_script' => 'boolean',
+        'settings' => 'array',
         'is_blocked' => 'boolean',
     ];
 

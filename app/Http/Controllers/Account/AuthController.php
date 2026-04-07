@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPasswordMail;
@@ -34,7 +34,7 @@ class AuthController extends Controller
     public function index()
     {
         // 
-        return view('frontend.auth.login', ['title' => 'Sign In']);
+        return view('account.auth.login', ['title' => 'Sign In']);
     }
 
 
@@ -77,7 +77,7 @@ class AuthController extends Controller
 
         // return view('frontend.emails.password-reset', ['url' => route('new-password', 'dsdsds2312')]);
 
-        return view('frontend.auth.passwort-reset', ['title' => 'Password Reset']);
+        return view('account.auth.passwort-reset', ['title' => 'Password Reset']);
     }
 
 
@@ -147,7 +147,7 @@ class AuthController extends Controller
             $resetData = null;
         }
 
-        return view('frontend.auth.new-password', ['title' => 'New Password', 'token' => $token, 'resetData' => $resetData]);
+        return view('account.auth.new-password', ['title' => 'New Password', 'token' => $token, 'resetData' => $resetData]);
     }
 
 

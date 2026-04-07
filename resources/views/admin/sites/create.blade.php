@@ -67,7 +67,7 @@
                             </x-admin.form-item>
                             <x-admin.form-item>
                                 <x-admin.label> {{ __('URL upload file ( https://example.com )')}} </x-admin.label>
-                                <x-admin.input name="upload_url" />
+                                <x-admin.input name="settings[file_upload_url]" />
                             </x-admin.form-item>
 
 
@@ -81,7 +81,7 @@
 
                                 <div class="card-body__group card-body__group-switch">
                                     <x-admin.form-item>
-                                        <x-admin.checkbox name="device_script" id="device_script" role="switch" />
+                                        <x-admin.checkbox name="settings[device_script]" id="device_script" role="switch" />
 
                                         <x-admin.label for="device_script">
                                             <span></span>

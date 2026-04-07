@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('widgets', function (Blueprint $table) {
             $table->id();
 
-            // Привязка к сайту клиента
+            // ? Привязка к сайту клиента  nullable() 
             $table->foreignIdFor(Site::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             // Какой шаблон (логику) использует этот виджет
             $table->foreignIdFor(WidgetTemplate::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();

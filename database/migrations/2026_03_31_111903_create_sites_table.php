@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->string('name');
             $table->string('domen')->unique();
-            $table->string('upload_url');
-            $table->boolean('device_script')->default(false);
+            $table->json('settings');
+            // $table->string('upload_url');
+            // $table->boolean('device_script')->default(false);
             $table->boolean('is_blocked')->default(false);
 
             $table->timestamps();

@@ -14,12 +14,12 @@
 
 
 
-    <link rel="stylesheet" href="{{ asset('css/auth/auth.css') . '?v=' . rand(10, 1000)  }}">
+    <link rel="stylesheet" href="{{ asset('css/account/auth.css') . '?v=' . rand(10, 1000)  }}">
 
 
 
 
-    <script src="{{ asset('js/auth/auth.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+    <script src="{{ asset('js/account/auth.js') . '?v=' . rand(10, 1000)  }}" defer></script>
 
 </head>
 

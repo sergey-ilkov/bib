@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Frontend\AccountController;
-use App\Http\Controllers\Frontend\AppController;
-use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Account\AccountController;
+use App\Http\Controllers\Account\AppController;
+use App\Http\Controllers\Account\AuthController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;

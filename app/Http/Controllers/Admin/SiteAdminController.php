@@ -47,17 +47,22 @@ class SiteAdminController extends Controller
 
     public function store(Request $request, Site $site)
     {
-        // 
+
+
+
         $data = $request->validate([
             'user_id'    => 'required|exists:users,id',
             'name'       => 'required|string|max:255',
             'domen'   => 'required|string|unique:sites,domen',
-            'upload_url' => 'required|url',
+            'settings' => 'required|array',
+
         ]);
 
-        $data = clearData($data);
+        $request->validate([
+            'settings.file_upload_url' => 'required|url',
+        ]);
 
-        $data['device_script'] = $request->has('device_script');
+        $data['settings']['device_script'] = isset($data['settings']['device_script']); // true/false
         $data['is_blocked'] = false;
 
 
@@ -87,12 +92,14 @@ class SiteAdminController extends Controller
         $data = $request->validate([
             'name'       => 'required|string|max:255',
             'domen'   => ['required', 'string', Rule::unique('sites', 'domen')->ignore($site->id)],
-            'upload_url' => 'required|url',
+            'settings' => 'required|array',
         ]);
 
-        $data = clearData($data);
+        $request->validate([
+            'settings.file_upload_url' => 'required|url',
+        ]);
 
-        $data['device_script'] = $request->has('device_script');
+        $data['settings']['device_script'] = isset($data['settings']['device_script']); // true/false
 
 
         $res = $site->update($data);
