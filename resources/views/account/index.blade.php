@@ -48,7 +48,7 @@ $user = auth('web')->user();
 
 <div id="account-form-name" class="modal modal-account-form">
     <div class="modal-body account-form-wrap">
-        <div class="account-form-title title-h3">Change Name</div>
+        <div class="form-title title-h3">Change Name</div>
         <form action="{{ route('account.update') }}" class="account-form form" method="PUT" data-action="change-name">
 
             <div class="form-group">
@@ -56,11 +56,11 @@ $user = auth('web')->user();
                 <input type="text" class="form-input" name="name" autocomplete="off">
             </div>
 
-            <div class="account-form-btns">
-                <button type="button" class="account-form-btn btn-2 btn-grey" data-action="cancel">
+            <div class="form-btns">
+                <button type="button" class="form-btn btn-2 btn-grey" data-action="cancel">
                     <span class="btn-bg">Cancel</span>
                 </button>
-                <button type="button" class="account-form-btn btn-2 btn-blue" data-action="confirm">
+                <button type="button" class="form-btn btn-2 btn-blue" data-action="confirm">
                     <span class="btn-bg">Confirm</span>
                 </button>
             </div>
@@ -72,7 +72,7 @@ $user = auth('web')->user();
 </div>
 <div id="account-form-password" class="modal modal-account-form">
     <div class="modal-body account-form-wrap">
-        <div class="account-form-title title-h3">Change Password</div>
+        <div class="form-title title-h3">Change Password</div>
         <form action="{{ route('account.update') }}" class="account-form form" method="PUT" data-action="change-password">
 
             <div class="form-group">
@@ -80,11 +80,11 @@ $user = auth('web')->user();
                 <input type="text" class="form-input" name="password" autocomplete="off">
             </div>
 
-            <div class="account-form-btns">
-                <button type="button" class="account-form-btn btn-2 btn-grey" data-action="cancel">
+            <div class="form-btns">
+                <button type="button" class="form-btn btn-2 btn-grey" data-action="cancel">
                     <span class="btn-bg">Cancel</span>
                 </button>
-                <button type="button" class="account-form-btn btn-2 btn-blue" data-action="confirm">
+                <button type="button" class="form-btn btn-2 btn-blue" data-action="confirm">
                     <span class="btn-bg">Confirm</span>
                 </button>
             </div>

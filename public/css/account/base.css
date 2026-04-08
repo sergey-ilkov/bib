@@ -165,6 +165,14 @@ body.fixed {
     background: transparent;
     transition: var(--transition);
 }
+.btn-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
 .btn-2:hover .btn-bg,
 .btn:hover .btn-bg {
     background: rgba(17, 17, 17, 0.05);
@@ -175,6 +183,20 @@ body.fixed {
 
 .btn-blue {
     color: var(--color-blue);
+}
+.btn-red {
+    color: var(--color-red);
+}
+
+.btn-red:hover .btn-bg {
+    background: rgba(249, 50, 98, 0.05);
+}
+.btn-2.btn-red {
+    color: var(--color-white);
+    background: var(--color-red);
+}
+.btn-2.btn-red:hover .btn-bg {
+    background: rgba(17, 17, 17, 0.05);
 }
 .btn-lightblue:hover .btn-bg,
 .btn-blue:hover .btn-bg {
@@ -198,6 +220,12 @@ body.fixed {
     background: rgba(17, 17, 17, 0.05);
     color: rgba(17, 17, 17, 1);
 }
+.btn-2.btn-green {
+    /* background: rgb(63, 184, 124, 1); */
+    background: #3fb87c;
+    color: var(--color-white);
+}
+
 /* ?  btn all */
 /* ?  btn all */
 /* ?  btn all */
@@ -272,6 +300,20 @@ body.fixed {
 /* ? modal */
 .modal {
     display: none;
+    position: fixed;
+    inset: 0px;
+    background: rgba(17, 17, 17, 0.2);
+    z-index: 1100;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20vh 12px 40px;
+}
+.modal-body {
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--color-white);
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
+    padding: 20px 24px;
 }
 .modal.show {
     display: flex;
@@ -474,12 +516,18 @@ body.fixed {
     display: none;
 }
 
-.modal-account-form.send .form-loader {
+.modal.send .form-loader {
+    display: block;
+}
+.modal.send .modal-body {
+    display: none;
+}
+/* .modal-account-form.send .form-loader {
     display: block;
 }
 .modal-account-form.send .modal-body {
     display: none;
-}
+} */
 
 /* ? header */
 
@@ -840,18 +888,18 @@ body.fixed {
 .account-form-wrap {
     max-width: 400px;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden;
     border-radius: 8px;
     background: var(--color-white);
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
-    padding: 20px 24px;
+    padding: 20px 24px; */
 }
-.account-form-title {
+.form-title {
     text-align: center;
 }
 
 /* ? modal-account-form */
-.modal-account-form {
+/* .modal-account-form {
     position: fixed;
     inset: 0px;
     background: rgba(17, 17, 17, 0.2);
@@ -859,17 +907,22 @@ body.fixed {
     justify-content: center;
     align-items: flex-start;
     padding: 20vh 12px 40px;
-}
-.account-form-btns {
+} */
+.form-btns {
     display: flex;
     gap: 20px;
 }
-.account-form-btn {
+.form-btn {
     width: 100%;
 }
-
+.form-desc {
+    text-align: center;
+}
+.form-head {
+    margin-bottom: 20px;
+}
 @media (max-width: 400px) {
-    .account-form-btns {
+    .form-btns {
         flex-direction: column-reverse;
     }
 }
@@ -893,40 +946,25 @@ body.fixed {
 .app-item {
     border: 1px solid rgba(17, 17, 17, 0.1);
     border-radius: 8px;
-    padding: 16px;
+    padding: 12px;
 }
-.app-item-row {
+
+.app-item-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
 }
-.app-item-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 .app-item-title {
     font-size: 16px;
-    /* font-weight: 600; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(17, 17, 17, 0.5);
+}
+.app-item.active .app-item-title {
+    color: var(--color-green);
     /* font-weight: 500; */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: rgba(17, 17, 17, 0.5);
-    /* color: var(--color-green); */
-}
-
-.app-item-head-label {
-    font-size: 16px;
-    font-weight: 600;
-}
-.app-item-head-value {
-    font-size: 14px;
-    color: rgba(17, 17, 17, 0.5);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .app-item-link svg {
@@ -966,22 +1004,270 @@ body.fixed {
 @media (max-width: 500px) {
 }
 
-/* ? widget create page*/
-.widget-header-inner {
+.app-widget {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    gap: 20px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(17, 17, 17, 0.1);
+    /* padding: 12px 0; */
+    padding-top: 12px;
+    position: relative;
+}
+.app-widget-image {
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    width: 170px;
+    height: 170px;
 }
 
-.widget-create {
-    padding-top: 16vh;
+.app-widget-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-blue);
+    margin-bottom: 2px;
+    position: relative;
 }
-.form-widget-create-wrap {
-    border-radius: 8px;
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    padding: 20px 24px;
-    max-width: 600px;
+.app-widget-link::before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
     width: 100%;
-    margin: 0 auto;
+    height: 1px;
+    background: var(--color-blue);
+    opacity: 0;
+    /* transition: var(--transition); */
+}
+.app-widget-link:hover::before {
+    /* text-decoration: underline; */
+    transition: var(--transition);
+    opacity: 1;
+}
+.app-widget-date {
+    font-size: 13px;
+    color: rgba(17, 17, 17, 0.5);
+}
+.app-widget-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.app-widget-btn {
+    height: 32px;
+}
+.app-widget-btn .btn-bg {
+    padding: 0 12px;
+}
+
+.app-wdget-more-action {
+    position: absolute;
+    z-index: 10;
+    top: 6px;
+    right: 0;
+}
+.app-widget-btn-more {
+    color: rgba(17, 17, 17, 0.7);
+    height: 32px;
+    position: relative;
+}
+.app-widget-btn-more svg {
+    width: 22px;
+    height: 22px;
+}
+.app-widget-btn-more:hover {
+    color: rgba(17, 17, 17, 1);
+}
+
+.app-widget-btn-more::before {
+    content: attr(data-text);
+    position: absolute;
+    width: 100px;
+    top: -32px;
+    color: var(--color-white);
+    border-radius: var(--border-radius);
+    background: #3d3d3d;
+    padding: 4px;
+    z-index: -1;
+    transform: translateY(10px);
+    font-weight: 400;
+    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.2);
+
+    display: none;
+    opacity: 0;
+}
+.app-widget-btn-more:hover::before {
+    display: block;
+    animation: more-text-show 0.2s ease forwards;
+}
+@keyframes more-text-show {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.app-widget-btn svg {
+    width: 18px;
+    height: 18px;
+}
+.app-wdget-more-line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: rgba(17, 17, 17, 0.1);
+    margin: 6px 0;
+}
+
+.app-wdget-more-box {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.2);
+    padding: 12px 0;
+    min-width: 200px;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    display: none;
+    transform: translate(20px, -20px);
+    opacity: 0;
+}
+.app-wdget-more-box .btn-bg {
+    justify-content: flex-start;
+}
+.app-wdget-more-action.open .app-wdget-more-box {
+    display: flex;
+    animation: more-action-show 0.2s ease forwards;
+}
+@keyframes more-action-show {
+    0% {
+        opacity: 0;
+        transform: translate(20px, -20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px);
+    }
+}
+
+@media (max-width: 600px) {
+    .app-wdget-more-action {
+        position: relative;
+        top: unset;
+        right: unset;
+    }
+    .app-widget-btn-more {
+        background: rgba(17, 17, 17, 0.05);
+        color: rgba(17, 17, 17, 1);
+    }
+}
+
+/* ? modal-app-install */
+.modal-app-install {
+}
+.app-install-btn-close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgba(17, 17, 17, 0.5);
+}
+.app-install-btn-close:hover {
+    color: rgba(17, 17, 17, 1);
+}
+.app-install-title {
+    margin-bottom: 16px;
+}
+.app-install-desc {
+    margin-bottom: 16px;
+}
+
+.app-install-btn-copy {
+    align-self: flex-end;
+    color: var(--color-white);
+    height: 28px;
+}
+.app-install-btn-copy svg {
+    width: 18px;
+    height: 18px;
+}
+.app-install-btn-copy .btn-group {
+    gap: 8px;
+}
+.app-install-code-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.app-install-copy-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    color: var(--color-white);
+    border-radius: var(--border-radius);
+    background: #3d3d3d;
+    padding: 4px 8px;
+    z-index: -1;
+    transform: translate(-50%, 10px);
+    font-weight: 400;
+    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.2);
+
+    display: none;
+    opacity: 0;
+}
+
+.app-install-code-wrap.copied .app-install-copy-text {
+    display: block;
+    animation: copy-text-show 0.2s ease forwards;
+}
+
+@keyframes copy-text-show {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0px);
+    }
+}
+
+.app-install-code {
+    border: 1px solid var(--color-green);
+    border-radius: var(--border-radius);
+    background: rgba(63, 184, 124, 0.05);
+}
+.app-install-code pre {
+    padding: 16px;
+    padding-right: 16px;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.app-install-code code {
+    /* font-family: monospace;  */
+    font-size: 13px;
+    line-height: 16px;
+    color: #0e8b25;
+}
+
+.alert-message.success {
+    color: var(--color-green);
+    /* background: rgba(14, 193, 47, 0.05);   
+    border-color: rgba(14, 193, 47, 1); */
+    background: rgba(63, 184, 124, 0.05);
+    border-color: rgba(63, 184, 124, 1);
+}
+
+.app-form-wrap {
+    max-width: 400px;
+    width: 100%;
 }

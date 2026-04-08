@@ -8,218 +8,12 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     console.log('js auth');
 
-    // initAuthLogin();
 });
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function initAuthLogin() {
-    const loginFormWrap = document.querySelector('.login-form-wrap');
-    const form = document.querySelector('#auth-login-form');
-    if (!loginFormWrap && !form) return;
-
-    const formError = loginFormWrap.querySelector('.login-form-error');
-    const forminputs = form.querySelectorAll('input');
-
-    const inputs = form.querySelectorAll('.login-form-input');
-    const btnSignIn = form.querySelector('.btn-sign-in');
-
-    const url = form.getAttribute('action');
-
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            if (input.value.length > 4) {
-                const parent = input.parentNode;
-                parent.classList.remove('error');
-
-            }
-        })
-    });
-
-    let flagSend = true;
-    let objData = null;
-
-    btnSignIn.addEventListener('click', () => {
-
-        if (isValid()) {
-            const data = getFormData();
-            send(data);
-        }
-
-
-    })
-
-    function isValid() {
-        let res = true;
-        inputs.forEach(input => {
-            if (input.value.length == 0) {
-                res = false;
-                const parent = input.parentNode;
-                parent.classList.add('error');
-            }
-        });
-        return res;
-    }
-
-
-    function getFormData() {
-        const data = {};
-        forminputs.forEach(input => {
-            data[input.name] = input.value;
-        })
-
-        return data;
-
-    }
-
-
-    function resSuccess() {
-        if (objData['auth']) {
-
-            console.log('redirect account');
-            // window.location.assign(data.redirect)
-
-            // location.reload();
-        }
-    }
-    function resError() {
-        console.log(objData);
-
-        if (objData['status'] == 429 || this.objData['status'] == 419) {
-            // 429 Too Many Requests 419  CSRF-токен недействителен
-            formError.innerHTML = this.objData.message;
-            formError.style.display = 'flex';
-            return;
-        }
-        if (objData['status'] == 422) {
-
-            const errors = this.objData['errors'];
-
-            let html = '';
-            for (const key in errors) {
-
-                errors[key].forEach(error => {
-                    html += `<span>${error}</span>`;
-                })
-            }
-
-            formError.innerHTML = html;
-
-            formError.style.display = 'flex';
-
-
-
-
-
-            return;
-        }
-
-    }
-
-    function send(data) {
-
-
-        console.log('send ', url);
-        console.log('data ', data);
-        formError.innerHTML = '';
-        formError.style.display = 'none';
-
-        if (flagSend) {
-
-            flagSend = false;
-
-            objData = null;
-
-
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(data)
-
-            };
-
-            fetch(url, options)
-                .then(async response => {
-                    if (!response.ok) {
-                        if (response.status === 422) {
-                            const errorData = await response.json();
-                            throw { status: 422, errors: errorData };
-                        } else {
-                            if (response.status === 419) {
-                                const errorData = await response.json();
-                                throw { status: 419, errors: errorData };
-                            }
-                            if (response.status === 429) {
-                                const errorData = await response.json();
-                                throw { status: 429, errors: errorData };
-                            }
-                            throw new Error(`HTTP error, status = ${response.status}`);
-                        }
-                    }
-
-                    return response.json();
-                })
-                .then(result => {
-
-                    objData = result;
-
-                    if (result.status == 'ok') {
-                        resSuccess();
-                    } else {
-                        resError();
-
-                    }
-
-                    flagSend = true;
-
-                })
-                .catch(error => {
-
-
-                    if (error.status === 419 || error.status === 429 || error.status === 422) {
-
-                        objData = error.errors;
-                        objData['status'] = error.status;
-
-                        resError();
-                    }
-
-                    console.error('Fetch error:', error);
-
-                    flagSend = true;
-                });
-
-        }
-
-    }
-
-}
 
 
 
@@ -286,6 +80,14 @@ class AuthForm {
                 this.send();
             }
         });
+
+
+        this.section.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && this.flagSend && this.isValid()) {
+                this.getFormData();
+                this.send();
+            }
+        })
     }
 
     isValid() {
