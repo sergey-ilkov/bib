@@ -96,13 +96,79 @@ class WidgetController extends Controller
 
         return view('account.widgets.edit', [
             'title' => $widget->name,
-            'page' => 'widget',
+            'page' => 'configurator',
             'widget' => $widget,
 
         ]);
 
         // dd($widget);
 
-        dd('Success Constructor', $uuid);
+        // dd('Success Constructor', $uuid);
+    }
+
+
+    public function update(Request $request, $uuid)
+    {
+
+        $user = auth('web')->user();
+
+        $widget = $user->widgets()->where('uid', $uuid)->first();
+        if (!$widget) {
+            return response()->json([
+                'errors' => ['update' => ['Data update error.']],
+            ], 422);
+        }
+
+
+        $action = $request->input('action');
+
+        if ($action == 'widget-rename') {
+            $credentials = $request->validate([
+                'name' => 'required|string',
+            ]);
+
+            $data = clearData($credentials);
+
+            $widget->update($data);
+
+            return response()->json([
+                'success' => true,
+                'name' => $widget->name,
+                'message' => 'Name updated successfully',
+            ]);
+        }
+
+
+
+        return response()->json([
+            'errors' => ['action' => ['Invalid value.']],
+        ], 422);
+    }
+
+
+    public function destroy($uuid)
+    {
+        $user = auth('web')->user();
+
+        $widget = $user->widgets()->where('uid', $uuid)->first();
+        if (!$widget) {
+            return response()->json([
+                'errors' => ['delete' => ['Data delete error.']],
+            ], 422);
+        }
+
+
+        if ($widget->delete()) {
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Widget successfully removed.',
+            ]);
+        }
+
+
+        return response()->json([
+            'errors' => ['delete' => ['Data delete error.']],
+        ], 422);
     }
 }

@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
 
     // Страница конструктора для редактирования
     Route::get('/widget/{uuid}', [WidgetController::class, 'edit'])->name('widget.edit');
+    Route::put('/widget/{uuid}', [WidgetController::class, 'update'])->name('widget.update');
+    Route::delete('/widget/{uuid}', [WidgetController::class, 'destroy'])->name('widget.destroy');
 });
 
 
