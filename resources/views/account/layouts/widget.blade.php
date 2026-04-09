@@ -14,16 +14,16 @@
 
 
 
-    @stack('css')
 
     <link rel="stylesheet" href="{{ asset('css/account/base.css') . '?v=' . rand(10, 1000)  }}">
+    @stack('css')
 
 
 
-    @stack('js')
 
-    <script src="{{ asset('js/libs/alpine.js') }}" defer></script>
+    <script src="{{ asset('js/libs/alpine3.js') }}" defer></script>
     <script src="{{ asset('js/account/widget.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+    @stack('js')
 
 </head>
 

@@ -352,17 +352,10 @@ function initPageAccount() {
 
 document.addEventListener('alpine:init', () => {
     console.log('Alpina', Alpine);
-    Alpine.store('widget', { uid: null });
-
     Alpine.store('modals', {
         openIds: {},
-        open(id, uid) {
+        open(id) {
             console.log('click open');
-            console.log('uid ', uid);
-            if (uid) {
-                Alpine.store('widget').uid = uid;
-            }
-
             this.openIds[id] = true;
             window.dispatchEvent(new CustomEvent('modal-opened', { detail: { id } }));
         },
@@ -371,37 +364,6 @@ document.addEventListener('alpine:init', () => {
         closeAll() { this.openIds = {} }
     });
 
-    // window.compose = (a, b) => ({ ...a, ...b });
-
-
-    // window.r = compose(modalWithAutofocus('app-form-rename'), ajaxForm())
-    // console.log(r);
-
-    window.combined = (id) => {
-        const a = modalWithAutofocus(id);
-        const b = ajaxForm();
-
-        // если имена конфликтуют — можно переименовать/обернуть
-        return {
-            // объединяем поля/методы (позже свойства перезапишут ранние при совпадении)
-            ...a,
-            ...b,
-
-            // единый init, вызывающий init обоих компонентов в контексте this
-            init() {
-                // вызвать init из a, если есть
-                if (typeof a.init === 'function') a.init.call(this);
-                // вызвать init из b, если есть
-                if (typeof b.init === 'function') b.init.call(this);
-            }
-        };
-    };
-
-
-
-
-
-
 });
 
 function modalWithAutofocus(id) {
@@ -409,10 +371,9 @@ function modalWithAutofocus(id) {
         id,
 
         init() {
-            console.log('modalWithAutofocus');
             // if (Alpine.store('modals').isOpen(this.id)) this.focusFirst();
             window.addEventListener('modal-opened', (e) => {
-                console.log('modal-opened');
+
                 if (e.detail?.id === this.id) {
                     this.$nextTick(() => this.focusFirst());
                 }
@@ -458,61 +419,152 @@ function toggleMoreAction() {
     }
 }
 
-
-
+// ? Ajax
+// ? Ajax
+// ? Ajax
+// ? Ajax
+// ? Ajax
+// ? Ajax
 function ajaxForm() {
     return {
+        // state
+        form: { email: '', name: '' },
+        errors: {},
+        loading: false,
+        message: '',
+        messageClass: '',
+        messageVisible: false,
+        modalClasses: '',
 
-        form: null,
-        action: null,
-        url: '#',
+        // config
+        endpoint: '/api/send',
+        token: null,              // можно заполнить init()
+        messageTimeout: 3000,     // ms
+        hideModalTimeout: 3500,
 
         init() {
-            console.log(this);
-
-            console.log('init ajaxForm');
-            this.form = this.$el.querySelector('form');
-            this.url = this.form.getAttribute('action');
-            this.action = this.form.getAttribute('data-action');
-
-
-            console.log(this.form);
-            console.log(this.url);
-            console.log(this.action);
-
+            // пример получения токена (meta или store)
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            this.token = meta ? meta.content : null;
         },
 
-        async sendData() {
+        // 1. submit -> validate -> prepare -> send -> handle response
+        async submit() {
+            this.clearErrors();
+            // 1. проверка валидации
+            const valid = this.validate();
+            if (!valid) {
+                return;
+            }
 
-            console.log('sendData');
-            // Alpine.store('page').title = 'New Name';
+            // 2. подготовка данных
+            const payload = this.preparePayload();
 
-            // в ajaxForm после успеха
-            const data = { success: true, name: 'New Name', action: this.action }
-            window.dispatchEvent(new CustomEvent('form-success', { detail: { formId: this.formId, data } }));
+            try {
+                // 4. показать прелоадер и скрыть форму (упрощённо — переключаем loading)
+                this.loading = true;
 
+                // 3. отправка через fetch (JSON)
+                const res = await fetch(this.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(this.token ? { 'X-CSRF-TOKEN': this.token } : {})
+                    },
+                    body: JSON.stringify(payload)
+                });
 
+                const data = await res.json();
+
+                // 5. дождались ответа -> 6. вызов соответствующих функций
+                if (res.ok) {
+                    this.onSuccess(data);
+                } else {
+                    this.onError(data);
+                }
+            } catch (err) {
+                this.onError({ message: 'Network error' });
+            } finally {
+                // убираем прелоадер в onSuccess/onError по необходимости,
+                // но для гарантии:
+                this.loading = false;
+            }
+        },
+
+        validate() {
+            let ok = true;
+            if (!this.form.email || !this.form.email.includes('@')) {
+                this.errors.email = 'Введите корректный email';
+                ok = false;
+            }
+            if (!this.form.name) {
+                this.errors.name = 'Введите имя';
+                ok = false;
+            }
+
+            // добавим класс ошибки модалу, если есть ошибки (пример)
+            if (!ok) {
+                this.modalClasses = 'has-errors';
+                // убрать класс через 2s (опционально)
+                clearTimeout(this._errTimer);
+                this._errTimer = setTimeout(() => this.modalClasses = '', 2000);
+            }
+            return ok;
+        },
+
+        clearErrors() {
+            this.errors = {};
+            this.modalClasses = '';
+        },
+
+        preparePayload() {
+            // формируем payload; можно добавить доп.данные/метадату
+            return {
+                email: this.form.email,
+                name: this.form.name,
+                ts: Date.now()
+            };
+        },
+
+        // 6. обработки
+        onSuccess(data) {
+            // 7. добавить класс модальному окну, вставить сообщение и показать его
+            this.message = data?.message || 'Успех';
+            this.messageClass = 'success';
+            this.messageVisible = true;
+            this.modalClasses = 'success-state';
+
+            // можем очистить форму
+            this.form = { email: '', name: '' };
+
+            // 8. через время убираем сообщение и закрываем модал (пример)
+            clearTimeout(this._msgTimer);
+            this._msgTimer = setTimeout(() => {
+                this.messageVisible = false;
+                this.messageClass = '';
+                this.modalClasses = '';
+                // закрыть модал: если используете store — $store.modals.close(id)
+                // пример: dispatch события
+                window.dispatchEvent(new CustomEvent('modal-close', { detail: { id: this.modalId } }));
+            }, this.messageTimeout);
+        },
+
+        onError(data) {
+            // если сервер вернул ошибки полей, подставим их
+            if (data?.errors) {
+                this.errors = data.errors;
+            }
+            this.message = data?.message || 'Ошибка';
+            this.messageClass = 'error';
+            this.messageVisible = true;
+            this.modalClasses = 'error-state';
+
+            clearTimeout(this._errShowTimer);
+            this._errShowTimer = setTimeout(() => {
+                this.messageVisible = false;
+                this.messageClass = '';
+                this.modalClasses = '';
+            }, this.messageTimeout);
         }
-
     }
 }
-
-// в другом месте
-window.addEventListener('form-success', e => {
-
-    console.log('form-success', e.detail);
-    console.log('Alpine.store(widget) ', Alpine.store('widget'));
-    const data = e.detail.data;
-    const uid = Alpine.store('widget').uid;
-
-    if (data.action === 'widget-rename' && uid) {
-
-        const widgetItem = document.querySelector(`[widget-uid="${uid}"]`);
-        if (widgetItem) {
-            const widgetName = widgetItem.querySelector('.app-widget-link');
-            widgetName.textContent = data.name;
-        }
-
-    }
-
-});

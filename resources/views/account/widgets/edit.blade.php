@@ -1,5 +1,11 @@
 @extends('account.layouts.widget')
 
+
+@push('js')
+<script src="{{ asset('js/account/widget-bank-statement.js') }}" defer></script>
+@endpush
+
+
 @section('content')
 
 
@@ -19,17 +25,20 @@
         <div class="widget-preview-wrap">
 
             {{-- ? bibber-widget --}}
-            <div class="bibber-widget">
-                <div class="bibber-widget-header">
-                    <div class="bibber-widget-title">Upload a bank statement</div>
-                    <div class="bibber-widget-subtitle">( probability of loan approval +35% )</div>
-                </div>
+            <div class="bibber-app" data-bibber-app="{{ $widget->uid}}">
+                <div class="bibber-widget">
+                    <div class="bibber-widget-header">
+                        <div class="bibber-widget-title">Upload a bank statement</div>
+                        <div class="bibber-widget-subtitle">( probability of loan approval +35% )</div>
+                    </div>
 
-                <form class="bibber-widget-form">
                     <div class="bibber-widget-requirements">
                         <div class="bibber-widget-requirements-title">Requirements:</div>
                         <div class="bibber-widget-requirements-text">1. Attach a certificate from your bank (unmodified PDF file).</div>
                         <div class="bibber-widget-requirements-text">2. The bank statement must be from the last 3 months or more.</div>
+                    </div>
+                    <form class="bibber-widget-form">
+
                         <div class="bibber-app-checkbox-wrap">
                             <button class="bibber-app-checkbox">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -38,30 +47,53 @@
                             </button>
                             <span class="bibber-app-checkbox-text">Consent to information processing</span>
                         </div>
-                    </div>
 
-
-                    <div class="bibber-widget-form-group">
-                        <div class="bibber-widget-form-label">Please upload your document</div>
-
-                        <div class="bibber-app-file-btn-wrap">
-                            <button type="button" class="bibber-app-file-btn bibber-app-btn">
-                                <input class="bibber-app-file-input" type="file" name="file" accept=".pdf">
-                                <span class="bibber-app-btn-bg bibber-app-btn-text-wrap">
-                                    <span class="btn-text-accent">Choose file</span>
-                                    <span>or drop here</span>
-                                </span>
-                            </button>
-                            <span class="bibber-app-file-disabled"></span>
+                        <div class="bibber-app-file-data">
+                            <span class="bibber-app-file-label">File:</span>
+                            <span class="bibber-app-file-value">dfdfd.pdf</span>
                         </div>
-                    </div>
 
-                    <button type="button" class="bibber-app-btn-send bibber-app-btn">
-                        <span class="bibber-app-btn-bg">Send</span>
-                    </button>
+                        <div class="bibber-app-message">Error send file</div>
 
-                </form>
+                        <div class="bibber-app-file-wrap">
 
+                            <div class="bibber-app-dropzone">
+                                <label class="bibber-app-file-btn">
+                                    <input class="bibber-app-file-input" type="file" name="file" accept=".pdf">
+                                    <span class="bibber-app-btn-bg bibber-app-btn-text-wrap">
+                                        <span class="btn-text-accent">Choose file</span>
+                                        <span>or drop here</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="bibber-app-analize-file">
+                                <div class="bibber-app-analize-file-title">Analize file</div>
+                                <div class="bibber-app-analize-data">
+                                    <span>Page</span>
+                                    <span class="bibber-app-analize-current-page"></span>
+                                    <span>of</span>
+                                    <span class="bibber-app-analize-total-pages"></span>
+                                </div>
+                                <span class="bibber-app-analize-loader"></span>
+                            </div>
+
+                        </div>
+
+
+
+                        <button class="bibber-app-btn-send" disabled>
+                            <span class="bibber-app-btn-bg">
+                                <span class="bibber-app-btn-loader-wrap">
+                                    <span class="bibber-app-btn-loader"></span>
+                                </span>
+                                <span class="bibber-app-btn-text">Send</span>
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
             </div>
 
             {{-- ? bibber-widget --}}
