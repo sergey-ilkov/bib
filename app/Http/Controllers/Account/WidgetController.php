@@ -58,7 +58,10 @@ class WidgetController extends Controller
         }
 
 
-        dd('Error', $data);
+
+
+
+        // dd('Error', $data);
 
 
 

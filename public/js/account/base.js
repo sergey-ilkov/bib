@@ -24,15 +24,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     initPageAccount();
 
-    initPageApps();
+    // initPageApps();
 
 });
 
 const userBox = document.querySelector('#user-box');
-const userBtn = userBox.querySelector('#user-box-btn');
-userBtn.addEventListener('click', () => {
-    userPanelToggle()
-})
+if (userBox) {
+    const userBtn = userBox.querySelector('#user-box-btn');
+
+    userBtn.addEventListener('click', () => {
+        userPanelToggle()
+    })
+}
 
 function userPanelToggle() {
     userBox.classList.toggle('open');
@@ -40,7 +43,7 @@ function userPanelToggle() {
 
 document.addEventListener('click', (e) => {
     // ? закрытие панели пользователя
-    if (!userBox.contains(e.target) && userBox.classList.contains('open')) {
+    if (userBox && !userBox.contains(e.target) && userBox.classList.contains('open')) {
         userPanelToggle();
     }
 
@@ -88,13 +91,23 @@ if (burgerMenu && mobileMenu) {
 }
 
 const userPanelLinks = document.querySelectorAll('.user-panel-link');
-userPanelLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        userBox.classList.remove('open');
-        toggleFixedBody();
+if (userPanelLinks.length) {
+
+    userPanelLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            userBox.classList.remove('open');
+            toggleFixedBody();
+        })
     })
-})
+}
+
+
+
+
+
+
+
 
 
 const modalLoader = document.querySelector('#modal-loader');
@@ -345,191 +358,3 @@ function initPageAccount() {
 }
 
 
-
-// ? Alphine js
-// ? Alphine js
-// ? Alphine js
-// ? Alphine js
-// ? Alphine js
-
-
-function initPageApps() {
-    const pageApps = document.querySelector('.page-apps');
-
-    // console.log('pageApps ', pageApps);
-
-    if (!pageApps) return;
-
-
-
-
-
-
-
-}
-
-
-
-// document.addEventListener('alpine:init', () => {
-//     console.log('Alpina', Alpine);
-//     Alpine.store('widget', { uid: null });
-
-//     Alpine.store('modals', {
-//         openIds: {},
-//         open(id, uid) {
-//             console.log('click open');
-//             console.log('uid ', uid);
-//             if (uid) {
-//                 Alpine.store('widget').uid = uid;
-//             }
-
-//             this.openIds[id] = true;
-//             window.dispatchEvent(new CustomEvent('modal-opened', { detail: { id } }));
-//         },
-//         close(id) { delete this.openIds[id] },
-//         isOpen(id) { return !!this.openIds[id] },
-//         closeAll() { this.openIds = {} }
-//     });
-
-//     // window.compose = (a, b) => ({ ...a, ...b });
-
-
-//     // window.r = compose(modalWithAutofocus('app-form-rename'), ajaxForm())
-//     // console.log(r);
-
-//     window.combined = (id) => {
-//         const a = modalWithAutofocus(id);
-//         const b = ajaxForm();
-
-//         // если имена конфликтуют — можно переименовать/обернуть
-//         return {
-//             // объединяем поля/методы (позже свойства перезапишут ранние при совпадении)
-//             ...a,
-//             ...b,
-
-//             // единый init, вызывающий init обоих компонентов в контексте this
-//             init() {
-//                 // вызвать init из a, если есть
-//                 if (typeof a.init === 'function') a.init.call(this);
-//                 // вызвать init из b, если есть
-//                 if (typeof b.init === 'function') b.init.call(this);
-//             }
-//         };
-//     };
-
-
-// });
-
-
-// function modalWithAutofocus(id) {
-//     return {
-//         id,
-
-//         init() {
-//             console.log('modalWithAutofocus');
-//             // if (Alpine.store('modals').isOpen(this.id)) this.focusFirst();
-//             window.addEventListener('modal-opened', (e) => {
-//                 console.log('modal-opened');
-//                 if (e.detail?.id === this.id) {
-//                     this.$nextTick(() => this.focusFirst());
-//                 }
-//             });
-
-//         },
-//         focusFirst() {
-
-//             this.$refs.firstInput?.focus?.();
-//         }
-//     }
-// }
-
-// function copyEmbedCode() {
-//     return {
-//         duration: 1000,
-//         className: 'copied',
-
-//         copyCode() {
-
-//             const text = this.$refs.source?.innerText || '';
-//             navigator.clipboard.writeText(text);
-
-//             const target = this.$refs.target;
-//             if (!target) return;
-//             target.classList.add(this.className);
-
-
-//             clearTimeout(this._removeTimer);
-//             this._removeTimer = setTimeout(() => {
-//                 target.classList.remove(this.className);
-//             }, this.duration);
-//         }
-//     }
-// }
-
-
-// function toggleMoreAction() {
-//     return {
-//         open: false,
-//         toggle() { this.open = !this.open },
-//         close() { this.open = false }
-//     }
-// }
-
-
-
-// function ajaxForm() {
-//     return {
-
-//         form: null,
-//         action: null,
-//         url: '#',
-
-//         init() {
-//             console.log(this);
-
-//             console.log('init ajaxForm');
-//             this.form = this.$el.querySelector('form');
-//             this.url = this.form.getAttribute('action');
-//             this.action = this.form.getAttribute('data-action');
-
-
-//             console.log(this.form);
-//             console.log(this.url);
-//             console.log(this.action);
-
-//         },
-
-//         async sendData() {
-
-//             console.log('sendData');
-//             // Alpine.store('page').title = 'New Name';
-
-//             // в ajaxForm после успеха
-//             const data = { success: true, name: 'New Name', action: this.action }
-//             window.dispatchEvent(new CustomEvent('form-success', { detail: { formId: this.formId, data } }));
-
-
-//         }
-
-//     }
-// }
-
-// // в другом месте
-// window.addEventListener('form-success', e => {
-
-//     console.log('form-success', e.detail);
-//     console.log('Alpine.store(widget) ', Alpine.store('widget'));
-//     const data = e.detail.data;
-//     const uid = Alpine.store('widget').uid;
-
-//     if (data.action === 'widget-rename' && uid) {
-
-//         const widgetItem = document.querySelector(`[widget-uid="${uid}"]`);
-//         if (widgetItem) {
-//             const widgetName = widgetItem.querySelector('.app-widget-link');
-//             widgetName.textContent = data.name;
-//         }
-
-//     }
-
-// });

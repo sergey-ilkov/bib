@@ -21,8 +21,9 @@
 
 
 
-    <script src="{{ asset('js/libs/alpine3.js') }}" defer></script>
-    <script src="{{ asset('js/account/widget.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+    <script src="{{ asset('js/account/base.js') . '?v=' . rand(10, 1000)  }}" defer></script>
+    {{-- <script src="{{ asset('js/account/widget.js') . '?v=' . rand(10, 1000)  }}" defer></script> --}}
+
     @stack('js')
 
 </head>

@@ -2,7 +2,9 @@
 
 
 @push('js')
-<script src="{{ asset('js/account/widget-bank-statement.js') }}" defer></script>
+{{-- <script src="{{ asset('js/account/widget-bank-statement.js') }}" defer></script> --}}
+<script src="{{ asset('js/account/alpine-configurator.js') }}" defer></script>
+<script src="{{ asset('js/libs/alpine3.js') }}" defer></script>
 @endpush
 
 
@@ -14,13 +16,19 @@
 
 @endphp
 
+<div class="configurator-loader">
+    <div class="configurator-loader-text">Loading...</div>
+</div>
 
-<section class="configurator">
+<section class="configurator" x-data="{ isMobile: false }">
 
-    <div class="widget-panel">
 
-    </div>
-    <div class="widget-preview">
+    @include('account.includes.widget-panel')
+
+
+
+
+    <div class="widget-preview" :class="{'mobile': isMobile}">
 
         <div class="widget-preview-wrap">
 
@@ -105,6 +113,21 @@
 
         </div>
 
+
+        {{-- ? viewport --}}
+        <div class="viewport">
+            <button class="viewport-btn-mobile" data-text="Mobile View" x-show="!isMobile" @click.prevent="isMobile = true">
+                <svg class="svg-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" fill-rule="evenodd" d="M15 3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6Zm-3 14.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM15 4H9a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Z"></path>
+                </svg>
+            </button>
+            <button class="viewport-btn-desktop" data-text="Desktop View" x-show="isMobile" @click.prevent="isMobile = false">
+                <svg class="svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" fill-rule="evenodd" d="M19 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6.401v1.9H15a.6.6 0 0 1 .097 1.192L15 20.1H9a.6.6 0 0 1-.097-1.192L9 18.9h2.399V17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14Zm0 1H5a1 1 0 0 0-.993.883L4 5v9a1 1 0 0 0 .883.993L5 15h14a1 1 0 0 0 .993-.883L20 14V5a1 1 0 0 0-1-1Z"></path>
+                </svg>
+            </button>
+        </div>
+
     </div>
 
 
@@ -112,18 +135,40 @@
 
 
 
-    <div class="viewport">
-        <svg class="svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M19 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6.401v1.9H15a.6.6 0 0 1 .097 1.192L15 20.1H9a.6.6 0 0 1-.097-1.192L9 18.9h2.399V17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14Zm0 1H5a1 1 0 0 0-.993.883L4 5v9a1 1 0 0 0 .883.993L5 15h14a1 1 0 0 0 .993-.883L20 14V5a1 1 0 0 0-1-1Z"></path>
-        </svg>
-        <svg class="svg-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M15 3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6Zm-3 14.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM15 4H9a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Z"></path>
-        </svg>
-    </div>
+
+
 </section>
 
 
 
+
+
+
+<div id="widget-rename" class="modal modal-app-form" x-data="combined('widget-rename')" :class="{ 'show': $store.modals.isOpen('widget-rename') }" x-show="$store.modals.isOpen('widget-rename')" x-on:keydown.escape.window="$store.modals.close('widget-rename')" @click="$store.modals.close('widget-rename')" style="display:none;">
+    <div class="modal-body app-form-wrap" @click.stop>
+        <div class="form-title title-h3">Rename Widget</div>
+
+        <form action="#" class="app-form form" method="PUT" data-action="widget-rename" @keydown.enter.prevent="sendData()">
+
+            <div class="form-group">
+                <span class="form-label">Widget Rename</span>
+                <input x-ref="firstInput" type="text" class="form-input" name="name" autocomplete="off">
+            </div>
+
+            <div class="form-btns">
+                <button type="button" class="form-btn btn-2 btn-grey" @click="$store.modals.close('widget-rename')">
+                    <span class="btn-bg">Cancel</span>
+                </button>
+                <button type="button" class="form-btn btn-2 btn-blue" @click="sendData()">
+                    <span class="btn-bg">Confirm</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-loader">
+        <div class="loader"></div>
+    </div>
+</div>
 
 
 

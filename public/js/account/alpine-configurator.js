@@ -1,52 +1,25 @@
-
-
 document.addEventListener('alpine:init', () => {
     console.log('Alpina', Alpine);
-    // Alpine.store('widget', { uid: null });
+
     Alpine.store('widget', {
         uid: null,
+        name: null,
         url: null,
 
-        html: '<span class="bibber-app">dfgdfgdf</span>',
+
         update(obj) {
-            if (obj.uid) {
-                this.uid = obj.uid;
-                // console.log('obj ', obj);
-                // console.log(this.uid);
-            }
-            if (obj.url) {
-                this.url = obj.url;
-            }
-            // this.html = `<strong>${this.uid}</strong>`;
-            this.html = `<pre>
-<code x-ref=" source">&lt;div class="bibber-app" data-bibber-app="${this.uid}"&gt;&lt;/div&gt;
-&lt;script src="https://bibber.net/apps/ebmed.js" async&gt;&lt;/script&gt;</code>
-</pre> `;
+            Object.assign(this, obj);
+            // ? Test Objeact.assign()
+            console.log('this ', this);
         }
 
     });
-
-    //     Alpine.data('bibberCode', () => ({
-    //         init() {
-    //             this.update();
-    //             this.$watch(() => {
-    //                 // console.log('this.$watch');
-    //                 null, () => this.update();
-    //             });
-    //         },
-    //         update() {
-    //             const uid = '';
-    //             this.$refs.embed_code.textContent =
-    //                 `<div class="bibber-app" data-bibber-app="${uid}"></div>
-    // <script src="https://bibber.net/apps/ebmed.js" async></script>`;
-    //         }
-    //     }));
 
 
     Alpine.store('modals', {
         openIds: {},
         open(id) {
-            console.log('click open');
+            // console.log('click open');
 
             this.openIds[id] = true;
             window.dispatchEvent(new CustomEvent('modal-opened', { detail: { id } }));
@@ -90,11 +63,12 @@ document.addEventListener('alpine:init', () => {
     };
 
 
-});
+    const configuratorLoader = document.querySelector('.configurator-loader');
+    setTimeout(() => {
+        configuratorLoader.classList.add('hidden');
+    }, 1000)
 
-function setEmbetCode() {
-
-}
+})
 
 
 function modalWithAutofocus(id) {
@@ -102,10 +76,9 @@ function modalWithAutofocus(id) {
         id,
 
         init() {
-            // console.log('modalWithAutofocus');
 
             window.addEventListener('modal-opened', (e) => {
-                // console.log('modal-opened');
+
                 if (e.detail?.id === this.id) {
                     this.$nextTick(() => this.focusFirst());
                 }
@@ -116,38 +89,6 @@ function modalWithAutofocus(id) {
 
             this.$refs.firstInput?.focus?.();
         }
-    }
-}
-
-function copyEmbedCode() {
-    return {
-        duration: 1000,
-        className: 'copied',
-
-        copyCode() {
-
-            const text = this.$refs.embedcode?.innerText || '';
-            navigator.clipboard.writeText(text);
-
-            const target = this.$refs.target;
-            if (!target) return;
-            target.classList.add(this.className);
-
-
-            clearTimeout(this._removeTimer);
-            this._removeTimer = setTimeout(() => {
-                target.classList.remove(this.className);
-            }, this.duration);
-        }
-    }
-}
-
-
-function toggleMoreAction() {
-    return {
-        open: false,
-        toggle() { this.open = !this.open },
-        close() { this.open = false }
     }
 }
 
@@ -192,11 +133,7 @@ function ajaxForm() {
 
 
             this.widget = Alpine.store('widget');
-            // console.log(this.modal);
 
-            // console.log(this.form);
-            // console.log(this.action);
-            // console.log(this.method);
 
 
             this.events();
@@ -251,11 +188,7 @@ function ajaxForm() {
 
                     this.objData = await res.json().catch(() => ({}));
 
-                    console.log('');
-                    console.log('');
-                    console.log('res ', res);
-                    console.log('');
-                    console.log('');
+
                     if (!res.ok) {
                         this.resError();
                         return;
@@ -265,8 +198,8 @@ function ajaxForm() {
                 }
                 catch (err) {
                     this.objData['errors'] = { 'network': ['Network error. Please try again.'] };
-                    console.log(err);
-                    // this.resError();
+
+                    this.resError();
 
                 }
                 finally {
@@ -279,45 +212,16 @@ function ajaxForm() {
 
             }
 
-            // console.log();
-            // console.log('objSendData ', this.objSendData);
-            // console.log(JSON.stringify(this.objSendData));
-
-            // console.log();
-
-            // this.modal.classList.add('send');
-
-            // return;
-
-            // ?
-            // this.widget = Alpine.store('widget');
-
-            // this.url = this.widget.url;
-            // this.uid = this.widget.uid;
-
-            // console.log('sendData');
-            // // Alpine.store('widget').url = 'fff';
-            // console.log('Alpine store widget');
-            // console.log('this.url ', this.url);
-            // console.log('this.uid ', this.uid);
-
-
-            // // Alpine.store('page').title = 'New Name';
-
-            // // в ajaxForm после успеха
-            // const data = { success: true, name: 'New Name', action: this.action }
-            // window.dispatchEvent(new CustomEvent('form-success', { detail: { formId: this.formId, data } }));
-
         },
 
         validate() {
             let res = true;
             if (this.action === 'widget-rename' && this.form.name.value.length == 0) {
-                console.log('Error');
-                console.log(this.form.name);
+                // console.log('Error');
+                // console.log(this.form.name);
                 const parent = this.form.name.parentNode;
                 parent.classList.add('error');
-                console.log(parent);
+                // console.log(parent);
                 res = false;
             }
             return res;
@@ -335,7 +239,7 @@ function ajaxForm() {
         },
 
         resSuccess() {
-            console.log('this.resSucces()');
+            // console.log('this.resSucces()');
             this.modalAlertMessage.classList.add('success');
 
             if (this.objData.messages) {
@@ -353,27 +257,31 @@ function ajaxForm() {
 
             if (this.action == 'widget-rename') {
 
-                if (this.widget.uid) {
-                    const widgetItem = document.querySelector(`[widget-uid="${this.widget.uid}"]`);
-                    if (widgetItem && this.objData.name) {
-                        const widgetName = widgetItem.querySelector('.app-widget-link');
-                        widgetName.textContent = this.objData.name;
-                    }
+                if (this.widget.name) {
+                    // const widgetItem = document.querySelector(`[widget-uid="${this.widget.uid}"]`);
+                    // if (widgetItem && this.objData.name) {
+                    //     const widgetName = widgetItem.querySelector('.app-widget-link');
+                    //     widgetName.textContent = this.objData.name;
+                    // }
+                    this.widget.name = this.objData.name;
+
+                    const title = document.querySelector('title');
+                    const titleArr = title.innerText.split('|');
+                    title.innerText = `${this.objData.name} | ${titleArr[1]}`;
+
+
+
                 }
             }
-            console.log(this.action);
+            // console.log(this.action);
 
-            if (this.action == 'widget-delete') {
-                console.log(this.action);
-                // window.location
-                window.location.href = window.location.href;
-            }
+
 
             this.modalAlertShow();
 
         },
         resError() {
-            console.log('this.resError()');
+            // console.log('this.resError()');
             this.modalAlertMessage.classList.add('error');
 
             if (this.objData.errors) {
@@ -414,23 +322,5 @@ function ajaxForm() {
     }
 }
 
-// в другом месте
-// window.addEventListener('form-success', e => {
 
-//     // console.log('form-success', e.detail);
-//     // console.log('Alpine.store(widget) ', Alpine.store('widget'));
-//     // const data = e.detail.data;
-//     // const uid = Alpine.store('widget').uid;
-
-//     // if (data.action === 'widget-rename' && uid) {
-
-//     //     const widgetItem = document.querySelector(`[widget-uid="${uid}"]`);
-//     //     if (widgetItem) {
-//     //         const widgetName = widgetItem.querySelector('.app-widget-link');
-//     //         widgetName.textContent = data.name;
-//     //     }
-
-//     // }
-
-// });
 

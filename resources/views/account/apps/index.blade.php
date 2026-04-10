@@ -10,7 +10,7 @@ $widgets = $user->widgets;
 @endphp
 
 @push('js')
-<script src="{{ asset('js/account/alphine-apps.js') }}" defer></script>
+<script src="{{ asset('js/account/alpine-apps.js') }}" defer></script>
 <script src="{{ asset('js/libs/alpine3.js') }}" defer></script>
 @endpush
 
