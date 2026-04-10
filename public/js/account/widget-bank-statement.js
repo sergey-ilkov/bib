@@ -14,16 +14,22 @@ form.addEventListener('submit', function (event) {
 let flagAnalizeFile = false;
 
 let userChecked = false;
-const checkboxBtn = bibberApp.querySelector('.bibber-app-checkbox');
-const checkboxWrap = bibberApp.querySelector('.bibber-app-checkbox-wrap');
-checkboxWrap.addEventListener('click', () => {
-    checkboxBtn.classList.remove('error');
-    checkboxBtn.classList.toggle('checked');
+const checkboxWrap = bibberApp.querySelector('.bibber-app-custom-checkbox');
+const inputCheckbox = bibberApp.querySelector('.bibber-app-checkbox-input');
+// checkboxWrap.addEventListener('click', () => {
+//     checkboxBtn.classList.remove('error');
+//     checkboxBtn.classList.toggle('checked');
 
-    console.log(checkboxBtn.closest('.checked'));
-    userChecked = checkboxBtn.closest('.checked') ? true : false;
+//     console.log(checkboxBtn.closest('.checked'));
+//     userChecked = checkboxBtn.closest('.checked') ? true : false;
 
-})
+// })
+inputCheckbox.addEventListener('change', () => {
+    checkboxWrap.classList.remove('error');
+    userChecked = inputCheckbox.checked;
+
+
+});
 
 let fileUpload = null;
 const inputFile = bibberApp.querySelector('.bibber-app-file-input');
@@ -36,10 +42,9 @@ inputFile.addEventListener('click', (e) => {
     }
 
 
-
-    if (!userChecked) {
+    if (userChecked == false) {
         e.preventDefault();
-        checkboxBtn.classList.add('error');
+        checkboxWrap.classList.add('error');
         console.log('user Error Checked');
         return;
     }
@@ -122,7 +127,7 @@ dropzone.addEventListener('drop', (e) => {
     if (flagAnalizeFile) return;
 
     console.log('drop');
-    if (!userChecked) {
+    if (userChecked == false) {
         console.log('Error userChecked: ', userChecked);
         return;
     }
@@ -177,9 +182,9 @@ dropzone.addEventListener('drop', (e) => {
         //     console.log('Error userChecked: ', userChecked);
         // }
         // if (!allowCheckbox.checked) return;
-        if (!userChecked) {
+        if (userChecked == false) {
             console.log('Error userChecked: ', userChecked);
-            checkboxBtn.classList.add('error');
+            checkboxWrap.classList.add('error');
             return;
         }
         dropzone.classList.remove('error');
@@ -253,8 +258,6 @@ btnSend.addEventListener('click', () => {
 function getRandomNum(max = 3, min = 1) {
     return Math.floor(Math.random() * (max - min) + min);
 }
-
-
 
 const fileData = bibberApp.querySelector('.bibber-app-file-data');
 function fileDataShow(v) {

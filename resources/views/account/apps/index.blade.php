@@ -9,9 +9,10 @@ $widgets = $user->widgets;
 
 @endphp
 
-{{-- @push('js')
+@push('js')
+<script src="{{ asset('js/account/alphine-apps.js') }}" defer></script>
 <script src="{{ asset('js/libs/alpine3.js') }}" defer></script>
-@endpush --}}
+@endpush
 
 
 
@@ -50,19 +51,25 @@ $widgets = $user->widgets;
 
                     <h3 class="app-item-title">{{$site->domen}}</h3>
 
+
+
                 </div>
 
-                {{-- @php
-                app()->setLocale('en')
-                @endphp --}}
 
-                {{-- {{ dd($site->widgets) }} --}}
                 @foreach ($site->widgets as $widget)
+
+                @php
+                $url_update = route('widget.update', $widget->uid);
+                $url_delete = route('widget.destroy', $widget->uid);
+                $image = asset("images/account/{$widget->template->widgetType->slug}.png");
+                @endphp
 
                 <div class="app-widget" widget-uid="{{ $widget->uid}}">
 
                     <div class="app-widget-image">
-                        Link and Image widget
+                        <a href="{{ route('widget.edit', $widget->uid) }}" class="app-widget-image-link">
+                            <img src="{{ $image }}" alt="bank-statement">
+                        </a>
                     </div>
 
                     <div class="app-widget-box">
@@ -72,7 +79,7 @@ $widgets = $user->widgets;
 
                         <div class="app-widget-buttons">
 
-                            <button class="app-widget-btn btn-2 btn-green" x-data @click="$store.modals.open('app-install')">
+                            <button class="app-widget-btn btn-2 btn-green" x-data @click="$store.modals.open('app-install'); $store.widget.update({uid: '{{ $widget->uid}}' })">
                                 <span class="btn-bg">Install</span>
                             </button>
                             <a href="{{ route('widget.edit', $widget->uid) }}" class="app-widget-btn btn-2 btn-grey">
@@ -90,7 +97,7 @@ $widgets = $user->widgets;
 
                                 <div class="app-wdget-more-box" x-ref="panel" :class="{ 'show': open }" x-show="open" @click.outside="close()" x-on:keydown.escape.window="close()" style="display:none;">
 
-                                    <button class="app-widget-btn btn" x-data @click="$store.modals.open('app-install'); toggle()">
+                                    <button class="app-widget-btn btn" x-data @click="$store.modals.open('app-install'); toggle(); $store.widget.update({uid: '{{ $widget->uid}}' })">
                                         <span class="btn-bg">
                                             <span class="btn-group">
                                                 <span>Embed Code</span>
@@ -102,7 +109,9 @@ $widgets = $user->widgets;
                                         </span>
                                     </button>
 
-                                    <button class="app-widget-btn btn" x-data @click="$store.modals.open('app-form-rename', '{{$widget->uid}}'); toggle()">
+
+
+                                    <button class="app-widget-btn btn" x-data @click="$store.modals.open('widget-rename'); toggle(); $store.widget.update({uid: '{{$widget->uid }}', url: '{{$url_update }}'})">
                                         <span class="btn-bg">
                                             <span class="btn-group">
                                                 <span>Rename Widget</span>
@@ -115,7 +124,7 @@ $widgets = $user->widgets;
                                     </button>
                                     <span class="app-wdget-more-line"></span>
 
-                                    <button class="app-widget-btn btn btn-red" x-data @click="$store.modals.open('app-form-delete', '{{$widget->uid}}'); toggle()">
+                                    <button class="app-widget-btn btn btn-red" x-data @click="$store.modals.open('widget-delete'); toggle(); $store.widget.update({uid: '{{$widget->uid }}', url: '{{$url_delete }}'})">
                                         <span class="btn-bg">
                                             <span class="btn-group">
                                                 <span>Delete Widget</span>
@@ -155,23 +164,23 @@ $widgets = $user->widgets;
 
                 <div class="app-item-head">
 
-                    <div class="app-item-col">
-                        <h3 class="app-item-title">{{$site->domen}}</h3>
+                    <h3 class="app-item-title">{{$site->domen}}</h3>
+                    {{-- <div class="app-item-col">
 
-                    </div>
+                    </div> --}}
 
 
 
-                    <div class="app-item-col">
-                        <a href="{{ route('widgets.create', $site->id) }}" class="app-item-link btn-2 btn-lightblue">
-                            <span class="btn-bg">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                                <span>Create widget</span>
-                            </span>
-                        </a>
-                    </div>
+                    <a href="{{ route('widgets.create', $site->id) }}" class="app-item-link btn-2 btn-lightblue">
+                        <span class="btn-bg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <span>Create widget</span>
+                        </span>
+                    </a>
+                    {{-- <div class="app-item-col">
+                    </div> --}}
 
                 </div>
             </div>
@@ -219,11 +228,13 @@ $widgets = $user->widgets;
                 </span>
             </button>
 
-            <div class="app-install-code">
+            <div class="app-install-code" x-html="$store.widget.html" x-ref="embedcode">
+
+                {{--
                 <pre>
 <code x-ref="source">&lt;div class="bibber-app" data-bibber-app="dd0910c2-ec3f-472a-b010-670686a54bb6"&gt;&lt;/div&gt;
 &lt;script src="https://bibber.net/apps/ebmed.js" async&gt;&lt;/script&gt;</code>
-</pre>
+</pre> --}}
             </div>
 
         </div>
@@ -235,19 +246,19 @@ $widgets = $user->widgets;
 
 
 
-<div id="app-form-rename" class="modal modal-app-form" x-data="combined('app-form-rename')" :class="{ 'show': $store.modals.isOpen('app-form-rename') }" x-show="$store.modals.isOpen('app-form-rename')" x-on:keydown.escape.window="$store.modals.close('app-form-rename')" @click="$store.modals.close('app-form-rename')" style="display:none;">
+<div id="widget-rename" class="modal modal-app-form" x-data="combined('widget-rename')" :class="{ 'show': $store.modals.isOpen('widget-rename') }" x-show="$store.modals.isOpen('widget-rename')" x-on:keydown.escape.window="$store.modals.close('widget-rename')" @click="$store.modals.close('widget-rename')" style="display:none;">
     <div class="modal-body app-form-wrap" @click.stop>
         <div class="form-title title-h3">Rename Widget</div>
 
-        <form action="#" class="app-form form" method="PUT" data-action="widget-rename">
-            @csrf
+        <form action="#" class="app-form form" method="PUT" data-action="widget-rename" @keydown.enter.prevent="sendData()">
+
             <div class="form-group">
                 <span class="form-label">Widget Rename</span>
                 <input x-ref="firstInput" type="text" class="form-input" name="name" autocomplete="off">
             </div>
 
             <div class="form-btns">
-                <button type="button" class="form-btn btn-2 btn-grey" @click="$store.modals.close('app-form-rename')" data-action="cancel">
+                <button type="button" class="form-btn btn-2 btn-grey" @click="$store.modals.close('widget-rename')" data-action="cancel">
                     <span class="btn-bg">Cancel</span>
                 </button>
                 <button type="button" class="form-btn btn-2 btn-blue" @click="sendData()" data-action="confirm">
@@ -261,17 +272,17 @@ $widgets = $user->widgets;
     </div>
 </div>
 
-<div id="app-form-delete" class="modal modal-app-form" x-data="ajaxForm()" :class="{ 'show': $store.modals.isOpen('app-form-delete') }" x-show="$store.modals.isOpen('app-form-delete')" x-on:keydown.escape.window="$store.modals.close('app-form-delete')" @click="$store.modals.close('app-form-delete')" style="display:none;">
+<div id="widget-delete" class="modal modal-app-form" x-data="ajaxForm()" :class="{ 'show': $store.modals.isOpen('widget-delete') }" x-show="$store.modals.isOpen('widget-delete')" x-on:keydown.escape.window="$store.modals.close('widget-delete')" @click="$store.modals.close('widget-delete')" style="display:none;">
     <div class="modal-body app-form-wrap" @click.stop>
         <div class="form-head">
             <div class="form-title title-h3">Are you sure you want to delete the widget?</div>
             <div class="form-desc">Once deleted it cannot be recovered.</div>
         </div>
 
-        <form action="#" class="app-form form" method="DELETE" data-action="widget-destroy">
+        <form action="#" class="app-form form" method="DELETE" data-action="widget-delete">
 
             <div class="form-btns">
-                <button type="button" class="form-btn btn-2 btn-grey" @click="$store.modals.close('app-form-delete')" data-action="cancel">
+                <button type="button" class="form-btn btn-2 btn-grey" @click="$store.modals.close('widget-delete')" data-action="cancel">
                     <span class="btn-bg">Cancel</span>
                 </button>
                 <button type="button" class="form-btn btn-2 btn-red" @click="sendData()" data-action="confirm">

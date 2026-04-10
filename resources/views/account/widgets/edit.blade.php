@@ -39,21 +39,22 @@
                     </div>
                     <form class="bibber-widget-form">
 
-                        <div class="bibber-app-checkbox-wrap">
-                            <button class="bibber-app-checkbox">
+                        <label class="bibber-app-custom-checkbox">
+                            <input class="bibber-app-checkbox-input" type="checkbox" />
+                            <span class="bibber-app-checkbox-box" aria-hidden="true">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"></path>
                                 </svg>
-                            </button>
+                            </span>
                             <span class="bibber-app-checkbox-text">Consent to information processing</span>
-                        </div>
+                        </label>
 
                         <div class="bibber-app-file-data">
                             <span class="bibber-app-file-label">File:</span>
-                            <span class="bibber-app-file-value">dfdfd.pdf</span>
+                            <span class="bibber-app-file-value"></span>
                         </div>
 
-                        <div class="bibber-app-message">Error send file</div>
+                        <div class="bibber-app-message"></div>
 
                         <div class="bibber-app-file-wrap">
 

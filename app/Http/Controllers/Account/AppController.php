@@ -23,14 +23,25 @@ class AppController extends Controller
 
         // $sites = $user->sites()->whereNot('is_blocked', true)->get();
         // $sites = $user->sites()->whereNot('is_blocked', true)->with('widgets')->get();
-        $sites = $user->sites()->whereNot('is_blocked', true)->with('widgets.template')->get();
+        // $sites = $user->sites()->whereNot('is_blocked', true)->with('widgets.template')->get();
+        $sites = $user->sites()->whereNot('is_blocked', true)->with('widgets.template.widgetType')->get();
 
         // dd($sites);
 
-        return view('account.apps.index', [
-            'title' => 'My Apps',
-            'page' => 'app',
-            'sites' => $sites,
-        ]);
+        return response()
+            ->view('account.apps.index', [
+                'title' => 'My Apps',
+                'page' => 'apps',
+                'sites' => $sites,
+            ])
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', 'Sat, 01 Jan 1990 00:00:00 GMT');
     }
+    //     return view('account.apps.index', [
+    //         'title' => 'My Apps',
+    //         'page' => 'apps',
+    //         'sites' => $sites,
+    //     ]);
+    // }
 }

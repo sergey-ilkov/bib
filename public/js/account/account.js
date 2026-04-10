@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     initPageAccount();
 
+    initPageApps();
+
 });
 
 const userBox = document.querySelector('#user-box');
@@ -350,169 +352,184 @@ function initPageAccount() {
 // ? Alphine js
 // ? Alphine js
 
-document.addEventListener('alpine:init', () => {
-    console.log('Alpina', Alpine);
-    Alpine.store('widget', { uid: null });
 
-    Alpine.store('modals', {
-        openIds: {},
-        open(id, uid) {
-            console.log('click open');
-            console.log('uid ', uid);
-            if (uid) {
-                Alpine.store('widget').uid = uid;
-            }
+function initPageApps() {
+    const pageApps = document.querySelector('.page-apps');
 
-            this.openIds[id] = true;
-            window.dispatchEvent(new CustomEvent('modal-opened', { detail: { id } }));
-        },
-        close(id) { delete this.openIds[id] },
-        isOpen(id) { return !!this.openIds[id] },
-        closeAll() { this.openIds = {} }
-    });
+    // console.log('pageApps ', pageApps);
 
-    // window.compose = (a, b) => ({ ...a, ...b });
-
-
-    // window.r = compose(modalWithAutofocus('app-form-rename'), ajaxForm())
-    // console.log(r);
-
-    window.combined = (id) => {
-        const a = modalWithAutofocus(id);
-        const b = ajaxForm();
-
-        // если имена конфликтуют — можно переименовать/обернуть
-        return {
-            // объединяем поля/методы (позже свойства перезапишут ранние при совпадении)
-            ...a,
-            ...b,
-
-            // единый init, вызывающий init обоих компонентов в контексте this
-            init() {
-                // вызвать init из a, если есть
-                if (typeof a.init === 'function') a.init.call(this);
-                // вызвать init из b, если есть
-                if (typeof b.init === 'function') b.init.call(this);
-            }
-        };
-    };
+    if (!pageApps) return;
 
 
 
 
 
 
-});
 
-function modalWithAutofocus(id) {
-    return {
-        id,
-
-        init() {
-            console.log('modalWithAutofocus');
-            // if (Alpine.store('modals').isOpen(this.id)) this.focusFirst();
-            window.addEventListener('modal-opened', (e) => {
-                console.log('modal-opened');
-                if (e.detail?.id === this.id) {
-                    this.$nextTick(() => this.focusFirst());
-                }
-            });
-
-        },
-        focusFirst() {
-
-            this.$refs.firstInput?.focus?.();
-        }
-    }
-}
-
-function copyEmbedCode() {
-    return {
-        duration: 1000,
-        className: 'copied',
-
-        copyCode() {
-
-            const text = this.$refs.source?.innerText || '';
-            navigator.clipboard.writeText(text);
-
-            const target = this.$refs.target;
-            if (!target) return;
-            target.classList.add(this.className);
-
-
-            clearTimeout(this._removeTimer);
-            this._removeTimer = setTimeout(() => {
-                target.classList.remove(this.className);
-            }, this.duration);
-        }
-    }
-}
-
-
-function toggleMoreAction() {
-    return {
-        open: false,
-        toggle() { this.open = !this.open },
-        close() { this.open = false }
-    }
 }
 
 
 
-function ajaxForm() {
-    return {
+// document.addEventListener('alpine:init', () => {
+//     console.log('Alpina', Alpine);
+//     Alpine.store('widget', { uid: null });
 
-        form: null,
-        action: null,
-        url: '#',
+//     Alpine.store('modals', {
+//         openIds: {},
+//         open(id, uid) {
+//             console.log('click open');
+//             console.log('uid ', uid);
+//             if (uid) {
+//                 Alpine.store('widget').uid = uid;
+//             }
 
-        init() {
-            console.log(this);
+//             this.openIds[id] = true;
+//             window.dispatchEvent(new CustomEvent('modal-opened', { detail: { id } }));
+//         },
+//         close(id) { delete this.openIds[id] },
+//         isOpen(id) { return !!this.openIds[id] },
+//         closeAll() { this.openIds = {} }
+//     });
 
-            console.log('init ajaxForm');
-            this.form = this.$el.querySelector('form');
-            this.url = this.form.getAttribute('action');
-            this.action = this.form.getAttribute('data-action');
-
-
-            console.log(this.form);
-            console.log(this.url);
-            console.log(this.action);
-
-        },
-
-        async sendData() {
-
-            console.log('sendData');
-            // Alpine.store('page').title = 'New Name';
-
-            // в ajaxForm после успеха
-            const data = { success: true, name: 'New Name', action: this.action }
-            window.dispatchEvent(new CustomEvent('form-success', { detail: { formId: this.formId, data } }));
+//     // window.compose = (a, b) => ({ ...a, ...b });
 
 
-        }
+//     // window.r = compose(modalWithAutofocus('app-form-rename'), ajaxForm())
+//     // console.log(r);
 
-    }
-}
+//     window.combined = (id) => {
+//         const a = modalWithAutofocus(id);
+//         const b = ajaxForm();
 
-// в другом месте
-window.addEventListener('form-success', e => {
+//         // если имена конфликтуют — можно переименовать/обернуть
+//         return {
+//             // объединяем поля/методы (позже свойства перезапишут ранние при совпадении)
+//             ...a,
+//             ...b,
 
-    console.log('form-success', e.detail);
-    console.log('Alpine.store(widget) ', Alpine.store('widget'));
-    const data = e.detail.data;
-    const uid = Alpine.store('widget').uid;
+//             // единый init, вызывающий init обоих компонентов в контексте this
+//             init() {
+//                 // вызвать init из a, если есть
+//                 if (typeof a.init === 'function') a.init.call(this);
+//                 // вызвать init из b, если есть
+//                 if (typeof b.init === 'function') b.init.call(this);
+//             }
+//         };
+//     };
 
-    if (data.action === 'widget-rename' && uid) {
 
-        const widgetItem = document.querySelector(`[widget-uid="${uid}"]`);
-        if (widgetItem) {
-            const widgetName = widgetItem.querySelector('.app-widget-link');
-            widgetName.textContent = data.name;
-        }
+// });
 
-    }
 
-});
+// function modalWithAutofocus(id) {
+//     return {
+//         id,
+
+//         init() {
+//             console.log('modalWithAutofocus');
+//             // if (Alpine.store('modals').isOpen(this.id)) this.focusFirst();
+//             window.addEventListener('modal-opened', (e) => {
+//                 console.log('modal-opened');
+//                 if (e.detail?.id === this.id) {
+//                     this.$nextTick(() => this.focusFirst());
+//                 }
+//             });
+
+//         },
+//         focusFirst() {
+
+//             this.$refs.firstInput?.focus?.();
+//         }
+//     }
+// }
+
+// function copyEmbedCode() {
+//     return {
+//         duration: 1000,
+//         className: 'copied',
+
+//         copyCode() {
+
+//             const text = this.$refs.source?.innerText || '';
+//             navigator.clipboard.writeText(text);
+
+//             const target = this.$refs.target;
+//             if (!target) return;
+//             target.classList.add(this.className);
+
+
+//             clearTimeout(this._removeTimer);
+//             this._removeTimer = setTimeout(() => {
+//                 target.classList.remove(this.className);
+//             }, this.duration);
+//         }
+//     }
+// }
+
+
+// function toggleMoreAction() {
+//     return {
+//         open: false,
+//         toggle() { this.open = !this.open },
+//         close() { this.open = false }
+//     }
+// }
+
+
+
+// function ajaxForm() {
+//     return {
+
+//         form: null,
+//         action: null,
+//         url: '#',
+
+//         init() {
+//             console.log(this);
+
+//             console.log('init ajaxForm');
+//             this.form = this.$el.querySelector('form');
+//             this.url = this.form.getAttribute('action');
+//             this.action = this.form.getAttribute('data-action');
+
+
+//             console.log(this.form);
+//             console.log(this.url);
+//             console.log(this.action);
+
+//         },
+
+//         async sendData() {
+
+//             console.log('sendData');
+//             // Alpine.store('page').title = 'New Name';
+
+//             // в ajaxForm после успеха
+//             const data = { success: true, name: 'New Name', action: this.action }
+//             window.dispatchEvent(new CustomEvent('form-success', { detail: { formId: this.formId, data } }));
+
+
+//         }
+
+//     }
+// }
+
+// // в другом месте
+// window.addEventListener('form-success', e => {
+
+//     console.log('form-success', e.detail);
+//     console.log('Alpine.store(widget) ', Alpine.store('widget'));
+//     const data = e.detail.data;
+//     const uid = Alpine.store('widget').uid;
+
+//     if (data.action === 'widget-rename' && uid) {
+
+//         const widgetItem = document.querySelector(`[widget-uid="${uid}"]`);
+//         if (widgetItem) {
+//             const widgetName = widgetItem.querySelector('.app-widget-link');
+//             widgetName.textContent = data.name;
+//         }
+
+//     }
+
+// });
