@@ -1945,6 +1945,11 @@ body.fixed {
 }
 .widget-panel-settings {
     flex: 1 1 400px;
+    color: rgb(143, 143, 143);
+}
+.widget-panel-settings svg {
+    width: 20px;
+    height: 20px;
 }
 
 .widget-panel-menu-btn {
@@ -2025,10 +2030,10 @@ body.fixed {
     background-color: rgb(61, 61, 61);
 }
 
-.widget-panel-group-btn svg {
+/* .widget-panel-group-btn svg {
     width: 20px;
     height: 20px;
-}
+} */
 
 .widget-panel-group-btn:not(:first-child) {
     border-top: 1px solid rgb(32, 32, 32);
@@ -2080,10 +2085,10 @@ body.fixed {
 .widget-custom-btn {
     color: rgb(188, 188, 188);
 }
-.widget-custom-btn svg {
+/* .widget-custom-btn svg {
     width: 20px;
     height: 20px;
-}
+} */
 /* ? widget-panel-settings-back */
 .widget-panel-btn-back {
     position: absolute;
@@ -2103,10 +2108,10 @@ body.fixed {
 .widget-panel-btn-back:hover {
     background: rgba(20, 148, 255, 0.2);
 }
-.widget-panel-btn-back svg {
+/* .widget-panel-btn-back svg {
     width: 20px;
     height: 20px;
-}
+} */
 
 /* ? widget-control-group */
 .widget-control-group {
@@ -2184,11 +2189,11 @@ input {
 /* Основной контейнер */
 
 .widget-control-range-wrap {
-    --track-height: 8px;
+    --track-height: 6px;
     --track-radius: 8px;
     --track-bg: #8f8f8f;
     --fill-bg: #1494ff;
-    --thumb-size: 20px;
+    --thumb-size: 18px;
     --thumb-bg: #fff;
     --thumb-border: 2px solid #3aa0ff;
     --thumb-radius: 50%;
@@ -2300,3 +2305,78 @@ input[type="range"]:focus {
         0 0 0 6px rgba(58, 160, 255, 0.12),
         var(--shadow);
 } */
+
+.widget-control-group {
+    margin-bottom: 1px;
+}
+
+/* ? widget-control-radius-wrap */
+
+.widget-control-group-btns {
+    display: flex;
+    border-radius: var(--border-radius);
+    background: rgb(61, 61, 61);
+    /* overflow: hidden; */
+}
+.widget-control-radius-more,
+.widget-control-radius-btn {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.widget-control-radius-more:hover,
+.widget-control-radius-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+}
+.widget-control-radius-more.active,
+.widget-control-radius-btn.active {
+    background: var(--accent-color);
+    color: var(--color-white);
+}
+.widget-control-radius-more.active:hover,
+.widget-control-radius-btn.active:hover {
+    background: var(--accent-color);
+    color: var(--color-white);
+}
+.widget-control-radius-btn:nth-child(1) {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+.widget-control-radius-more {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+.widget-control-radius-more::before,
+.widget-control-radius-btn::before {
+    content: attr(data-text);
+    position: absolute;
+    display: block;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-white);
+    padding: 2px 8px;
+    border-radius: var(--border-radius);
+    color: rgba(0, 0, 0, 1);
+    opacity: 0;
+    visibility: hidden;
+}
+.widget-control-radius-more:hover::before,
+.widget-control-radius-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transition: var(--transition);
+}
+.widget-control-lables {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.widget-control-range-wrap.hidden {
+    display: none;
+}

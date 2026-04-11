@@ -354,7 +354,7 @@ function initMirrorValues() {
             let value = Number(sanitizeDigits(input.value));
 
             if (e.key === 'ArrowUp') {
-                console.log('ArrowUp');
+                // console.log('ArrowUp');
                 if (value < maxValue) {
 
                     value += 1;
@@ -365,7 +365,7 @@ function initMirrorValues() {
                 if (value > 0) {
                     value -= 1;
                     input.value = validateValue(value, maxValue);
-                    console.log('ArrowDown');
+                    // console.log('ArrowDown');
                 }
             }
         })
@@ -396,7 +396,7 @@ function initMirrorValues() {
     function sanitizeDigits(s) {
         return s.replace(/\D+/g, ''); // оставляет только 0-9
     }
-    window.addEventListener('load', updateWidth);
+
 }
 initMirrorValues();
 
@@ -409,6 +409,42 @@ function initRangeControls() {
     const wraps = document.querySelectorAll('.widget-control-range-wrap');
 
     wraps.forEach(wrap => {
+
+        const parentWrap = wrap.closest('.widget-control-radius-wrap');
+
+
+        if (parentWrap) {
+            const radiusBtns = parentWrap.querySelectorAll('.widget-control-radius-btn');
+            const btnMore = parentWrap.querySelector('.widget-control-radius-more');
+            btnMore.addEventListener('click', () => {
+                wrap.classList.remove('hidden');
+                removeActiveBtn();
+                btnMore.classList.add('active');
+
+            })
+
+            radiusBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const value = btn.getAttribute('data-value');
+                    wrap.classList.add('hidden');
+                    removeActiveBtn();
+                    btn.classList.add('active');
+                    if (value) {
+                        inputOut.value = value;
+                        inputRange.value = value;
+                        update();
+                    }
+                })
+            })
+
+            function removeActiveBtn() {
+                radiusBtns.forEach((btn, index) => {
+                    btn.classList.remove('active');
+                })
+                btnMore.classList.remove('active');
+            }
+        }
+
 
         const mirror = wrap.querySelector('.mirror-value');
         const inputRange = wrap.querySelector('.widget-control-range');

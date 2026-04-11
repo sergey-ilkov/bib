@@ -29,7 +29,7 @@
 
 
         {{-- ? Appearance --}}
-        <div class="widget-panel-settings-item">
+        <div class="widget-panel-settings-item active">
 
             <div class="widget-panel-item-head">
                 <div class="widget-panel-title">Appearance</div>
@@ -144,12 +144,85 @@
                         </div>
                     </div>
                     <div class="widget-control-main">
-
                         <input type="range" class="widget-control-range" min="0" max="100" value="40" step="1">
-
-
+                        {{-- <div class="widget-control-lables">
+                            <span class="widget-control-label">0</span>
+                            <span class="widget-control-label">100</span>
+                        </div> --}}
                     </div>
                 </div>
+                <div class="widget-control-group bg-box widget-control-range-wrap">
+                    <div class="widget-control-top">
+                        <div class="widget-control-title">Vertical Padding</div>
+                        <div class="widget-control-data">
+                            <span class="mirror-value"></span>
+                            <input type="text" class="widget-control-value widget-control-range-out" value="40" min="0" max="100">
+                            <span class="widget-control-label">px</span>
+                        </div>
+                    </div>
+                    <div class="widget-control-main">
+                        <input type="range" class="widget-control-range" min="0" max="100" value="40" step="1">
+                        {{-- <div class="widget-control-lables">
+                            <span class="widget-control-label">0</span>
+                            <span class="widget-control-label">100</span>
+                        </div> --}}
+                    </div>
+                </div>
+                {{-- ? Corner Radius --}}
+                <div class="widget-control-radius-wrap">
+
+                    <div class="widget-control-group bg-box">
+                        <div class="widget-control-top">
+                            <div class="widget-control-title">Corner Radius</div>
+                            <div class="widget-control-group-btns">
+                                <div class="widget-control-radius-btn" data-text="Square" data-value="0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M15.833 4.167V17.5h-1.568V5.735H2.5V4.167z"></path>
+                                    </svg>
+                                </div>
+                                <div class="widget-control-radius-btn" data-text="Rounded" data-value="4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M9.82 4.167a6.013 6.013 0 0 1 6.01 5.839l.003.174v7.32h-1.568v-7.32a4.445 4.445 0 0 0-4.289-4.442l-.156-.003H2.5V4.167h7.32Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="widget-control-radius-btn" data-text="Circular" data-value="30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M3.284 4.167c6.856 0 12.428 5.498 12.547 12.326l.002.223v.784h-1.568v-.784c0-5.994-4.803-10.866-10.77-10.979l-.21-.002H2.5V4.167h.784Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="widget-control-radius-more" data-text="More">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M3.864 8.333a1.363 1.363 0 1 1 0 2.726 1.363 1.363 0 0 1 0-2.726Zm6.136 0a1.363 1.363 0 1 1 .001 2.726A1.363 1.363 0 0 1 10 8.333Zm6.136 0a1.363 1.363 0 1 1 .001 2.726 1.363 1.363 0 0 1 0-2.726Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="widget-control-group bg-box widget-control-range-wrap hidden">
+                        <div class="widget-control-top">
+                            <div class="widget-control-title">Radius</div>
+                            <div class="widget-control-data">
+                                <span class="mirror-value"></span>
+                                <input type="text" class="widget-control-value widget-control-range-out" value="30" min="0" max="40">
+                                <span class="widget-control-label">px</span>
+                            </div>
+                        </div>
+                        <div class="widget-control-main">
+                            <input type="range" class="widget-control-range" min="0" max="40" value="30" step="1">
+                            <div class="widget-control-lables">
+                                <span class="widget-control-label">0</span>
+                                <span class="widget-control-label">40</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
             </div>
 
         </div>
