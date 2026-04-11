@@ -25,85 +25,150 @@
 
     {{-- ? widget-panel-settings --}}
     <div class="widget-panel-settings">
-        <div class="widget-panel-settings-item active">
-            <div class="widget-panel-title">Appearance</div>
+
+
+
+        {{-- ? Appearance --}}
+        <div class="widget-panel-settings-item">
+
+            <div class="widget-panel-item-head">
+                <div class="widget-panel-title">Appearance</div>
+            </div>
 
             <div class="widget-panel-box-wrap">
 
-                <div class="widget-panel-box">
+                <div class="widget-panel-box bg-box">
                     <div class="widget-panel-box-title">Color Scheme</div>
-                </div>
-                <div class="widget-panel-box">
-                    <div class="widget-panel-box-title">Accent Color</div>
-                </div>
-                {{-- <div class="widget-panel-group">
+                    {{-- ? colors-group --}}
+                    <div class="widget-colors-group">
+                        <div class="widget-color-item active">
+                            <div class="widget-color" style="background-color: rgb(25, 123, 255);"></div>
+                        </div>
+                        <div class="widget-color-item">
+                            <div class="widget-color" style="background-color: rgb(141, 56, 255);"></div>
+                        </div>
+                        <div class="widget-color-item">
+                            <div class="widget-color" style="background-color: rgb(247, 36, 182);"></div>
+                        </div>
+                        <div class="widget-color-item">
+                            <div class="widget-color" style="background-color: rgb(255, 56, 56);"></div>
+                        </div>
+                        <div class="widget-color-item">
+                            <div class="widget-color" style="background-color: rgb(255, 120, 0);"></div>
+                        </div>
+                        <div class="widget-color-item">
+                            <div class="widget-color" style="background-color: rgb(255, 235, 0);"></div>
+                        </div>
+                        <div class="widget-color-item widget-custom-btn">
+                            <div class="widget-color" style="background-color:rgb(70, 70, 70);">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M3.483 6.803c-.507.944-.76 1.788-.76 2.53 0 2.946 2.377 5.334 5.31 5.334a5.268 5.268 0 0 0 2.75-.77ZM2.515 3.75a.597.597 0 0 0-.012.844l.013.012 10.088 9.796a.632.632 0 0 0 .88 0 .597.597 0 0 0 .013-.844l-.013-.012L3.396 3.75a.632.632 0 0 0-.88 0Zm5.518-2.417C6.925 2.388 5.991 3.373 5.23 4.29l7.583 7.37c.34-.704.53-1.493.53-2.327 0-1.963-1.77-4.63-5.31-8Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                {{-- <div class="widget-panel-box">
+                    <div class="widget-panel-box-title">Accent Color</div>
                 </div> --}}
 
             </div>
 
 
             <div class="widget-panel-box-wrap">
-
                 <div class="widget-panel-box-group-title">Customize Elements</div>
-
                 <div class="widget-panel-group">
-
-                    <button class="widget-panel-group-btn">
-                        <span>Background</span>
+                    <button class="widget-panel-group-btn  bg-box">
+                        <span>Widget</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
                         </svg>
                     </button>
-                    <button class="widget-panel-group-btn">
+                    <button class="widget-panel-group-btn  bg-box">
+                        <span>Form Fields</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
+                        </svg>
+                    </button>
+
+                    <button class="widget-panel-group-btn  bg-box">
                         <span>Header</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
                         </svg>
                     </button>
-                    <button class="widget-panel-group-btn">
-                        <span>Description</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
-                        </svg>
-                    </button>
-                    <button class="widget-panel-group-btn">
+                    <button class="widget-panel-group-btn  bg-box">
                         <span>Texts</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
                         </svg>
                     </button>
-                    <button class="widget-panel-group-btn">
+                    <button class="widget-panel-group-btn  bg-box">
                         <span>Buttons</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
                         </svg>
                     </button>
-                    <button class="widget-panel-group-btn">
+                    <button class="widget-panel-group-btn  bg-box">
                         <span>Messages</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path fill="currentColor" fill-rule="evenodd" d="M8.09 3.076a.6.6 0 0 0-.917.765l.07.083L13.317 10l-6.076 6.076a.6.6 0 0 0-.069.765l.07.083a.6.6 0 0 0 .765.07l.083-.07 6.5-6.5a.6.6 0 0 0 .07-.765l-.07-.083-6.5-6.5Z"></path>
                         </svg>
                     </button>
-
                 </div>
-
             </div>
+        </div>
+
+        {{-- ? Widget Background Padding--}}
+        <div class="widget-panel-settings-item active">
+
+            <div class="widget-panel-item-head">
+                <div class="widget-panel-btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12.076 3.076a.6.6 0 0 1 .918.765l-.07.083L6.85 10l6.075 6.076a.6.6 0 0 1 .07.765l-.07.083a.6.6 0 0 1-.765.07l-.083-.07-6.5-6.5a.6.6 0 0 1-.07-.765l.07-.083 6.5-6.5Z"></path>
+                    </svg>
+                    <span>Back</span>
+                </div>
+                <div class="widget-panel-title">Widget</div>
+            </div>
+            <div class="widget-panel-box-wrap">
+
+                <div class="widget-control-group bg-box widget-control-range-wrap">
+                    <div class="widget-control-top">
+                        <div class="widget-control-title">Horizontal Padding</div>
+                        <div class="widget-control-data">
+                            <span class="mirror-value"></span>
+                            <input type="text" class="widget-control-value widget-control-range-out" value="40" min="0" max="100">
+                            <span class="widget-control-label">px</span>
+                        </div>
+                    </div>
+                    <div class="widget-control-main">
+
+                        <input type="range" class="widget-control-range" min="0" max="100" value="40" step="1">
 
 
+                    </div>
+                </div>
+            </div>
 
         </div>
 
 
 
         <div class="widget-panel-settings-item">
-            <div class="widget-panel-title">Text</div>
+            <div class="widget-panel-item-head">
+
+                <div class="widget-panel-title">Text</div>
+            </div>
             <div class="widget-panel-box-wrap">
 
             </div>
         </div>
         <div class="widget-panel-settings-item">
-            <div class="widget-panel-title">Settings</div>
+            <div class="widget-panel-item-head">
+                <div class="widget-panel-title">Settings</div>
+            </div>
             <div class="widget-panel-box-wrap">
 
             </div>

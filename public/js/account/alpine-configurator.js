@@ -322,5 +322,127 @@ function ajaxForm() {
     }
 }
 
+function initMirrorValues() {
+
+    const dataControls = document.querySelectorAll('.widget-control-data');
+    dataControls.forEach(data => {
+        const input = data.querySelector('.widget-control-value');
+        const mirror = data.querySelector('.mirror-value');
+
+        let maxValue = input.getAttribute('max');
+        if (maxValue) {
+            maxValue = Number(maxValue);
+        }
+
+        input.addEventListener('input', () => {
+            let value = Number(sanitizeDigits(input.value));
+
+            input.value = validateValue(value, maxValue);
+
+            updateWidth(input, mirror);
+        });
 
 
+        input.addEventListener('focus', () => {
+            data.classList.add('active');
+        });
+        input.addEventListener('blur', () => {
+            data.classList.remove('active');
+        });
+
+        input.addEventListener('keydown', (e) => {
+            let value = Number(sanitizeDigits(input.value));
+
+            if (e.key === 'ArrowUp') {
+                console.log('ArrowUp');
+                if (value < maxValue) {
+
+                    value += 1;
+                    input.value = validateValue(value, maxValue);
+                }
+            }
+            if (e.key === 'ArrowDown') {
+                if (value > 0) {
+                    value -= 1;
+                    input.value = validateValue(value, maxValue);
+                    console.log('ArrowDown');
+                }
+            }
+        })
+        data.addEventListener('click', () => {
+            input.focus();
+        })
+
+    })
+
+    function validateValue(v, maxValue) {
+        let value = v;
+
+        if (value.length < 0) {
+            value = 0;
+        }
+        if (maxValue && value > maxValue) {
+            value = maxValue;
+        }
+
+        return value;
+    }
+
+    function updateWidth(input, mirror) {
+        mirror.textContent = input.value || '';
+        const w = Math.min(140, Math.max(20, mirror.offsetWidth));
+        input.style.width = w + 'px';
+    }
+    function sanitizeDigits(s) {
+        return s.replace(/\D+/g, ''); // оставляет только 0-9
+    }
+    window.addEventListener('load', updateWidth);
+}
+initMirrorValues();
+
+
+
+
+
+function initRangeControls() {
+
+    const wraps = document.querySelectorAll('.widget-control-range-wrap');
+
+    wraps.forEach(wrap => {
+
+        const mirror = wrap.querySelector('.mirror-value');
+        const inputRange = wrap.querySelector('.widget-control-range');
+        const inputOut = wrap.querySelector('.widget-control-range-out');
+
+
+        function update() {
+            const min = Number(inputRange.min) || 0;
+            const max = Number(inputRange.max) || 100;
+            const val = Number(inputRange.value);
+            const percent = ((val - min) / (max - min)) * 100;
+
+            inputRange.style.setProperty('--perc', percent + '%');
+
+            inputOut.value = val;
+            updateWidth();
+        }
+
+        inputRange.addEventListener('input', update);
+        window.addEventListener('load', update);
+
+
+        function updateWidth() {
+            mirror.textContent = inputOut.value || '';
+            const w = Math.min(140, Math.max(20, mirror.offsetWidth));
+            inputOut.style.width = w + 'px';
+        }
+
+        inputOut.addEventListener('blur', () => {
+            inputRange.value = inputOut.value;
+            update();
+        })
+
+    })
+}
+
+initRangeControls();
